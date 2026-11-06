@@ -313,7 +313,7 @@ create table applicant_documents (
   applicant_id uuid not null references applicants(id) on delete cascade,
   school_id    uuid not null references schools(id),          -- denormalisasi untuk RLS storage
   doc_type     document_type not null,
-  storage_path text not null unique,                          -- applicant-documents/{school}/{applicant}/{type}/{uuid}.{ext}
+  storage_path text not null unique,                          -- {school_id}/{applicant_id}/{doc_type}/{uuid}.{ext} (tanpa nama bucket; = storage.objects.name)
   file_name    text not null,
   mime_type    text not null,
   size_bytes   integer not null check (size_bytes > 0 and size_bytes <= 10485760),

@@ -68,7 +68,7 @@ export const applicantListParams = z.object({
 | `signOut` | — | user | Hapus sesi | |
 | `requestPasswordReset` | `{email}` | publik | Email reset | Selalu sukses (anti enumerasi) |
 | `updatePassword` | `{password}` | sesi recovery | | Min 12 karakter |
-| `moveApplicantStage` | `{schoolId, ids: uuid[1..200], to: Flow, note?}` | EDIT (+principal untuk keputusan) | RPC `move_applicant_stage` | `CONFLICT` bila sudah di tahap itu |
+| `moveApplicantStage` | `{schoolId, ids: uuid[1..200], to: Flow, note?}` | EDIT (+principal untuk keputusan) | RPC `move_applicant_stage` | Id yang sudah di tahap tujuan diabaikan (15 §9); hasil = jumlah yang berubah |
 | `createApplicant` | skema form (**belum didesain**) | EDIT | insert applicants + tabel anak (transaksi RPC) | `CONFLICT` no. registrasi |
 | `updateApplicantSection` | `{id, section, values}` | EDIT | update 1 tabel anak | |
 | `setAcceptanceDecision` | `{id, status, date, note}` | principal, school_admin | update kolom keputusan | |

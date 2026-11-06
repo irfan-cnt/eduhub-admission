@@ -59,8 +59,8 @@ app/
 components/
   shell/ data/ admission/ dashboard/ modules/ states/ ui/   # ui = shadcn
 lib/
-  supabase/ server.ts  client.ts  middleware.ts  admin.ts   # admin.ts hanya untuk script
-  domain/   stage.ts  steps.ts  issues.ts  completeness.ts  actions.ts   # logika murni
+  supabase/ server.ts  client.ts  middleware.ts             # klien service role hanya di scripts/ & Edge Functions
+  domain/   stage.ts  steps.ts  issues.ts  completeness.ts  actions.ts  detail-layout.ts   # logika murni
   data/     applicants.ts  dashboard.ts  transactions.ts …  # query server
   actions/  applicants.ts  documents.ts  reminders.ts …     # Server Actions ('use server')
   validation/ *.schema.ts                                   # Zod

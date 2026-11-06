@@ -1,0 +1,1156 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<title>Admission Mobile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.t-light{color-scheme:light;--bg:#F6F5F7;--surface:#FFFFFF;--surface2:#F3F1F4;--border:#E3DFE5;--border-strong:#A39BA8;--text:#1E1A21;--muted:#5F5866;--primary:#5001B2;--primary-hover:#3E008C;--on-primary:#FFFFFF;--primary-soft:#EFE6FB;--secondary:#EA3B5F;--secondary-soft:#FDE8ED;--gray-fg:#4B5563;--gray-bg:#EEF0F3;--blue-fg:#1D4ED8;--blue-bg:#E7EEFD;--green-fg:#15803D;--green-bg:#E2F3E7;--amber-fg:#8A4B08;--amber-bg:#FCF0DA;--red-fg:#B42318;--red-bg:#FDE9E7;--overlay:rgba(20,16,22,.45);--shadow:0 -4px 24px rgba(30,26,33,.12)}
+.t-dark{color-scheme:dark;--bg:#151217;--surface:#1E1A21;--surface2:#29242C;--border:#3A343E;--border-strong:#7A7280;--text:#F2EFF3;--muted:#B3ABB8;--primary:#B48CFF;--primary-hover:#C9ABFF;--on-primary:#1A0640;--primary-soft:#2B1C4D;--secondary:#FF7A95;--secondary-soft:#45202B;--gray-fg:#C3C9D1;--gray-bg:#2B2F36;--blue-fg:#9DBBFF;--blue-bg:#1D2A47;--green-fg:#86D9A6;--green-bg:#17301F;--amber-fg:#F4C97E;--amber-bg:#3A2B12;--red-fg:#FFA39B;--red-bg:#3F1D1A;--overlay:rgba(0,0,0,.6);--shadow:0 -4px 24px rgba(0,0,0,.5)}
+.t-light{--side-bg:#5001B2;--side-fg:#FFFFFF;--side-muted:rgba(255,255,255,.82);--side-active-bg:#FFFFFF;--side-active-fg:#5001B2;--side-hover:rgba(255,255,255,.14);--side-border:#5001B2;--side-alert:#FFFFFF}
+.t-dark{--side-bg:#2E0A6B;--side-fg:#FFFFFF;--side-muted:rgba(255,255,255,.8);--side-active-bg:#B48CFF;--side-active-fg:#1A0640;--side-hover:rgba(255,255,255,.1);--side-border:#2E0A6B;--side-alert:#FFFFFF}
+.b-tj.t-light{--primary:#0077A3;--primary-hover:#00628A;--on-primary:#FFFFFF;--primary-soft:#E0F5FC;--secondary:#00A7E1;--secondary-soft:#D6F2FB;--side-bg:#00A7E1;--side-fg:#FFFFFF;--side-muted:rgba(255,255,255,.9);--side-active-bg:#FFFFFF;--side-active-fg:#005F82;--side-hover:rgba(255,255,255,.18);--side-border:#00A7E1;--side-alert:#FFFFFF}
+.b-tj.t-dark{--primary:#5CCBF2;--primary-hover:#86D8F5;--on-primary:#04222E;--primary-soft:#10313F;--secondary:#33BDEB;--secondary-soft:#0E3442;--side-bg:#0A3A4D;--side-fg:#FFFFFF;--side-muted:rgba(255,255,255,.82);--side-active-bg:#00A7E1;--side-active-fg:#04222E;--side-hover:rgba(255,255,255,.08);--side-border:#0A3A4D;--side-alert:#FFB4AB}
+.sidehov:hover{background:var(--side-hover) !important}
+.app *{box-sizing:border-box}
+.app button,.app select,.app input{font:inherit;color:inherit}
+.app :focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.press:active{background:var(--surface2) !important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.noscroll::-webkit-scrollbar{display:none}
+.skel{background:linear-gradient(90deg,var(--surface2),var(--border),var(--surface2));background-size:200% 100%;animation:sk 1.2s infinite linear;border-radius:8px}
+@keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
+</style>
+</helmet>
+<div class="app {{themeClass}} {{brandClass}}" style="width:390px;height:844px;position:relative;overflow:hidden;display:flex;flex-direction:column;background:var(--bg);color:var(--text);font-family:'Source Sans 3','Source Sans Pro',system-ui,sans-serif;font-size:15px;line-height:1.5">
+
+<header style="flex:none;height:64px;display:flex;align-items:center;gap:10px;padding:0 8px 0 12px;background:var(--surface);border-top:3px solid var(--secondary);border-bottom:1px solid var(--border)">
+<sc-if value="{{isKGS}}" hint-placeholder-val="{{true}}"><span style="flex:none;width:42px;height:42px;border-radius:8px;background:#FFFFFF;display:inline-flex;align-items:center;justify-content:center"><img src="/_blob/e0a3ab47bdca40a32c58ecc213fa207a" alt="Logo Kreativa Global School" style="width:40px;height:40px;object-fit:contain"></span></sc-if>
+<sc-if value="{{isTJ}}" hint-placeholder-val="{{false}}"><span style="flex:none;height:42px;padding:3px 6px;border-radius:8px;background:#FFFFFF;display:inline-flex;align-items:center"><img src="/_blob/e7eef5cf158ac65287a62b0687f46edf" alt="Logo Sekolah Talenta Juara" style="height:34px;width:90px;object-fit:contain"></span></sc-if>
+<div style="flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.2">
+<strong style="font-size:17px">{{pageTitle}}</strong>
+<button type="button" onClick="{{openSchool}}" aria-label="Ganti sekolah, saat ini {{schoolName}}" style="display:flex;align-items:center;gap:4px;min-width:0;max-width:100%;border:0;background:transparent;padding:2px 0;cursor:pointer;font-size:13px;font-weight:600;color:var(--primary);text-align:left"><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{schoolName}}</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M6 9l6 6 6-6"></path></svg></button>
+</div>
+<button type="button" class="press" onClick="{{toggleDark}}" aria-label="{{darkLabel}}" style="width:44px;height:44px;border:0;border-radius:10px;background:transparent;display:inline-flex;align-items:center;justify-content:center;cursor:pointer">
+<sc-if value="{{dark}}" hint-placeholder-val="{{false}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg></sc-if>
+<sc-if value="{{light}}" hint-placeholder-val="{{true}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"></path></svg></sc-if>
+</button>
+<button type="button" class="press" onClick="{{goAct}}" aria-label="{{bellLabel}}" style="position:relative;width:44px;height:44px;border:0;border-radius:10px;background:transparent;display:inline-flex;align-items:center;justify-content:center;cursor:pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg><span aria-hidden="true" style="position:absolute;top:4px;right:2px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--red-fg);color:var(--surface);font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center">{{lateAll}}</span></button>
+</header>
+
+<main style="flex:1;min-height:0;overflow-y:auto;padding:16px 16px 24px">
+
+<sc-if value="{{showError}}" hint-placeholder-val="{{false}}">
+<div role="alert" style="margin-top:48px;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:32px 20px;display:flex;flex-direction:column;align-items:center;gap:12px">
+<span aria-hidden="true" style="width:48px;height:48px;border-radius:999px;background:var(--red-bg);color:var(--red-fg);display:inline-flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4M12 17h.01"></path></svg></span>
+<h2 style="margin:0;font-size:17px">Gagal memuat data</h2>
+<p style="margin:0;color:var(--muted);font-size:13px">Periksa koneksi internet Anda, lalu coba lagi.</p>
+<button type="button" onClick="{{retry}}" style="height:44px;padding:0 20px;border:0;border-radius:10px;background:var(--primary);color:var(--on-primary);font-weight:600;cursor:pointer">Coba lagi</button>
+</div>
+</sc-if>
+
+<sc-if value="{{showNoAccess}}" hint-placeholder-val="{{false}}">
+<div style="margin-top:48px;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:32px 20px;display:flex;flex-direction:column;align-items:center;gap:12px">
+<span aria-hidden="true" style="width:48px;height:48px;border-radius:999px;background:var(--gray-bg);color:var(--gray-fg);display:inline-flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg></span>
+<h2 style="margin:0;font-size:17px">Belum punya akses</h2>
+<p style="margin:0;color:var(--muted);font-size:13px">Akun Anda belum masuk grup Admission untuk sekolah ini. Hubungi admin sekolah.</p>
+</div>
+</sc-if>
+
+<sc-if value="{{showLoading}}" hint-placeholder-val="{{false}}">
+<div aria-busy="true" aria-label="Memuat" style="display:flex;flex-direction:column;gap:12px">
+<div class="skel" style="height:44px"></div>
+<div class="skel" style="height:112px"></div><div class="skel" style="height:112px"></div><div class="skel" style="height:112px"></div><div class="skel" style="height:112px"></div>
+</div>
+</sc-if>
+
+<sc-if value="{{showEmpty}}" hint-placeholder-val="{{false}}">
+<div style="margin-top:48px;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:32px 20px;display:flex;flex-direction:column;align-items:center;gap:12px">
+<span aria-hidden="true" style="width:48px;height:48px;border-radius:999px;background:var(--primary-soft);color:var(--primary);display:inline-flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"></path><path d="M5.5 5.1L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-6.9A2 2 0 0 0 16.8 4H7.2a2 2 0 0 0-1.7 1.1z"></path></svg></span>
+<h2 style="margin:0;font-size:17px">Belum ada pendaftar</h2>
+<p style="margin:0;color:var(--muted);font-size:13px">Pendaftar muncul setelah orang tua mengisi formulir online.</p>
+</div>
+</sc-if>
+
+<sc-if value="{{isHome}}" hint-placeholder-val="{{true}}">
+<div style="display:flex;flex-direction:column;gap:16px">
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+<sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:4px">
+<span style="font-size:12px;color:var(--muted);font-weight:500">{{k.label}}</span>
+<span style="font-size:22px;font-weight:700;letter-spacing:-0.02em;line-height:1.2">{{k.value}}</span>
+<span style="font-size:11px;color:var(--muted)">{{k.sub}}</span>
+</div>
+</sc-for>
+</div>
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:13px;font-weight:700">Tuition terkumpul</span><span style="font-size:12px;color:var(--muted)">{{tuitionPctText}}</span></div>
+<strong style="font-size:20px">{{tuitionText}}</strong>
+<div aria-hidden="true" style="height:8px;border-radius:999px;background:var(--surface2);overflow:hidden"><div style="height:100%;width:{{tuitionPct}}%;background:var(--secondary);border-radius:999px"></div></div>
+<span style="font-size:12px;color:var(--muted)">Target {{targetText}} · sisa kuota {{quotaLeft}} kursi</span>
+</div>
+<section aria-labelledby="mfn" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px">
+<h2 id="mfn" style="margin:0;font-size:15px;font-weight:700">Pipeline per tahap</h2>
+<sc-for list="{{funnel}}" as="f" hint-placeholder-count="5">
+<div style="display:flex;flex-direction:column;gap:4px">
+<div style="display:flex;justify-content:space-between;font-size:12px"><span style="font-weight:600">{{f.label}}</span><span><strong>{{f.count}}</strong> <span style="color:var(--muted)">{{f.dropText}}</span></span></div>
+<div aria-hidden="true" style="height:10px;border-radius:5px;background:var(--surface2);overflow:hidden"><div style="height:100%;width:{{f.pct}}%;background:var(--primary);opacity:{{f.opacity}};border-radius:5px"></div></div>
+</div>
+</sc-for>
+</section>
+<section aria-labelledby="mpt" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:4px">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><h2 id="mpt" style="margin:0;font-size:15px;font-weight:700">Perlu tindakan</h2><span style="font-size:11px;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--red-bg);color:var(--red-fg)">{{lateAll}} macet</span></div>
+<sc-for list="{{lateTop}}" as="it" hint-placeholder-count="3">
+<button type="button" class="press" onClick="{{it.open}}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:56px;text-align:left;padding:8px 4px;border:0;background:transparent;border-radius:8px;cursor:pointer">
+<span aria-hidden="true" style="flex:0 0 36px;height:36px;border-radius:999px;background:var(--primary-soft);color:var(--primary);font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center">{{it.initials}}</span>
+<span style="flex:1;min-width:0;display:flex;flex-direction:column"><span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{it.name}}</span><span style="font-size:12px;color:var(--muted)">{{it.sub}}</span></span>
+<span style="font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;background:var(--red-bg);color:var(--red-fg);white-space:nowrap">{{it.badge}}</span>
+</button>
+</sc-for>
+<button type="button" onClick="{{goAct}}" style="height:44px;border:0;background:transparent;color:var(--primary);font-weight:600;cursor:pointer">Lihat semua tindakan →</button>
+</section>
+</div>
+</sc-if>
+
+<sc-if value="{{isList}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="position:relative">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position:absolute;left:12px;top:13px;color:var(--muted)"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
+<label for="mq" class="sr">Cari pendaftar</label>
+<input id="mq" type="search" placeholder="Cari siswa, orang tua, no. daftar" onInput="{{onSearch}}" style="width:100%;height:44px;padding:0 12px 0 38px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-size:15px">
+</div>
+<div class="noscroll" style="display:flex;gap:8px;overflow-x:auto;margin:0 -16px;padding:0 16px">
+<sc-for list="{{tabs}}" as="t" hint-placeholder-count="6">
+<button type="button" onClick="{{t.pick}}" aria-pressed="{{t.activeStr}}" style="{{t.style}}">{{t.label}} <span style="opacity:.8">{{t.count}}</span></button>
+</sc-for>
+</div>
+<div style="display:flex;align-items:center;gap:8px">
+<span style="flex:1;font-size:13px;color:var(--muted)">{{listCount}}</span>
+<button type="button" class="press" onClick="{{openFilter}}" style="display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-weight:600;font-size:13px;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18M6 12h12M10 19h4"></path></svg>Filter<sc-if value="{{hasFilterCount}}" hint-placeholder-val="{{false}}"><span style="min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--primary);color:var(--on-primary);font-size:11px;display:inline-flex;align-items:center;justify-content:center">{{filterCount}}</span></sc-if></button>
+<button type="button" class="press" onClick="{{toggleSelMode}}" aria-pressed="{{selModeStr}}" style="height:40px;padding:0 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-weight:600;font-size:13px;cursor:pointer">{{selModeLabel}}</button>
+</div>
+
+<sc-if value="{{noResults}}" hint-placeholder-val="{{false}}">
+<div style="text-align:center;padding:32px 16px;color:var(--muted);display:flex;flex-direction:column;gap:8px;align-items:center"><strong style="color:var(--text)">Tidak ada yang cocok</strong><span style="font-size:13px">Ubah kata kunci atau filter.</span><button type="button" onClick="{{resetFilters}}" style="height:44px;padding:0 16px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-weight:600;cursor:pointer">Reset filter</button></div>
+</sc-if>
+
+<sc-for list="{{cards}}" as="c" hint-placeholder-count="5">
+<div style="display:flex;gap:10px;align-items:stretch;background:var(--surface);border:1px solid var(--border);border-radius:12px;{{c.cardStyle}}">
+<sc-if value="{{selMode}}" hint-placeholder-val="{{false}}"><label style="flex:0 0 44px;display:flex;align-items:center;justify-content:center;cursor:pointer"><input type="checkbox" checked="{{c.checked}}" onChange="{{c.toggle}}" aria-label="Pilih {{c.nameLabel}}" style="width:20px;height:20px;accent-color:var(--primary)"></label></sc-if>
+<button type="button" class="press" onClick="{{c.tap}}" style="flex:1;min-width:0;text-align:left;border:0;background:transparent;padding:12px 14px;border-radius:12px;display:flex;flex-direction:column;gap:8px;cursor:pointer">
+<span style="display:flex;align-items:flex-start;gap:8px;width:100%">
+<span style="flex:1;min-width:0;display:flex;flex-direction:column">
+<span style="font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;{{c.nameStyle}}">{{c.nameText}}</span>
+<span style="font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{c.parent}} · {{c.level}}</span>
+</span>
+<span style="flex:none;font-size:11px;font-weight:600;padding:2px 8px;border-radius:999px;{{c.flowStyle}}">{{c.flow}}</span>
+</span>
+<span style="display:flex;align-items:center;gap:10px;width:100%">
+<span aria-label="{{c.stepAria}}" style="display:flex;align-items:center">
+<sc-for list="{{c.steps}}" as="st" hint-placeholder-count="5">
+<sc-if value="{{st.hasLine}}" hint-placeholder-val="{{true}}"><span aria-hidden="true" style="width:10px;height:2px;{{st.lineStyle}}"></span></sc-if>
+<span aria-hidden="true" style="width:18px;height:18px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;{{st.dotStyle}}">
+<sc-if value="{{st.isDone}}" hint-placeholder-val="{{false}}"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></sc-if>
+<sc-if value="{{st.isActive}}" hint-placeholder-val="{{false}}"><span style="width:7px;height:7px;border-radius:999px;background:var(--blue-fg)"></span></sc-if>
+<sc-if value="{{st.isWait}}" hint-placeholder-val="{{false}}"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></sc-if>
+<sc-if value="{{st.isLate}}" hint-placeholder-val="{{false}}"><span style="font-size:11px;font-weight:800;line-height:1">!</span></sc-if>
+</span>
+</sc-for>
+</span>
+<span style="flex:1"></span>
+<span style="flex:none;font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;{{c.daysStyle}}">{{c.daysText}}</span>
+</span>
+<span style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);width:100%">
+<span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{c.summary}}</span>
+<sc-if value="{{c.hasFlag}}" hint-placeholder-val="{{false}}"><span style="flex:none;display:inline-flex;align-items:center;gap:4px;color:var(--red-fg);font-weight:600"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4M12 17h.01"></path></svg>{{c.flagShort}}</span></sc-if>
+</span>
+</button>
+</div>
+</sc-for>
+<sc-if value="{{hasMore}}" hint-placeholder-val="{{false}}"><button type="button" onClick="{{loadMore}}" style="height:44px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-weight:600;cursor:pointer">Muat lebih banyak ({{moreCount}} lagi)</button></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{isAct}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-direction:column;gap:12px">
+<div role="group" aria-label="Jenis tindakan" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:3px;border-radius:10px;background:var(--surface2)">
+<button type="button" onClick="{{actLate}}" aria-pressed="{{actLateStr}}" style="{{actLateStyle}}">Macet</button>
+<button type="button" onClick="{{actSched}}" aria-pressed="{{actSchedStr}}" style="{{actSchedStyle}}">Jadwal</button>
+<button type="button" onClick="{{actPay}}" aria-pressed="{{actPayStr}}" style="{{actPayStyle}}">Pembayaran</button>
+</div>
+<p style="margin:0;font-size:13px;color:var(--muted)">{{actHint}}</p>
+<sc-for list="{{actItems}}" as="it" hint-placeholder-count="5">
+<button type="button" class="press" onClick="{{it.open}}" style="display:flex;align-items:center;gap:12px;width:100%;min-height:64px;text-align:left;padding:10px 12px;border:1px solid var(--border);background:var(--surface);border-radius:12px;cursor:pointer">
+<span aria-hidden="true" style="flex:0 0 44px;height:44px;border-radius:10px;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1;font-weight:700;{{it.leadStyle}}"><span style="font-size:15px">{{it.lead1}}</span><span style="font-size:10px">{{it.lead2}}</span></span>
+<span style="flex:1;min-width:0;display:flex;flex-direction:column"><span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{it.name}}</span><span style="font-size:12px;color:var(--muted)">{{it.sub}}</span></span>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:var(--muted)"><path d="M9 18l6-6-6-6"></path></svg>
+</button>
+</sc-for>
+</div>
+</sc-if>
+</main>
+
+<sc-if value="{{hasSel}}" hint-placeholder-val="{{false}}">
+<div role="region" aria-label="Aksi massal" style="flex:none;display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--primary-soft);border-top:1px solid var(--border)">
+<strong style="flex:1;font-size:13px">{{selCount}} dipilih</strong>
+<button type="button" onClick="{{bulkWA}}" style="height:40px;padding:0 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-weight:600;font-size:13px;cursor:pointer">Ingatkan WA</button>
+<button type="button" onClick="{{bulkStage}}" style="height:40px;padding:0 12px;border:0;border-radius:10px;background:var(--primary);color:var(--on-primary);font-weight:600;font-size:13px;cursor:pointer">Ubah tahap</button>
+</div>
+</sc-if>
+
+<nav aria-label="Navigasi utama" style="flex:none;height:72px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));background:var(--side-bg);border-top:1px solid var(--side-border)">
+<button type="button" onClick="{{goHome}}" aria-current="{{homeCurrent}}" style="{{navHome}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><rect x="14" y="14" width="7" height="7" rx="1.5"></rect></svg>Ringkasan</button>
+<button type="button" onClick="{{goList}}" aria-current="{{listCurrent}}" style="{{navList}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>Pendaftar</button>
+<button type="button" onClick="{{goAct}}" aria-current="{{actCurrent}}" style="{{navAct}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>Tindakan</button>
+</nav>
+
+<sc-if value="{{hasDetail}}" hint-placeholder-val="{{false}}">
+<div role="dialog" aria-modal="true" aria-labelledby="mdn" style="position:absolute;inset:0;z-index:20;background:var(--bg);display:flex;flex-direction:column">
+<div style="flex:none;height:60px;display:flex;align-items:center;gap:4px;padding:0 8px;background:var(--surface);border-bottom:1px solid var(--border)">
+<button type="button" class="press" onClick="{{closeDetail}}" aria-label="Kembali" style="width:44px;height:44px;border:0;border-radius:10px;background:transparent;display:inline-flex;align-items:center;justify-content:center;cursor:pointer"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg></button>
+<span style="flex:1;font-size:13px;font-weight:600;color:var(--muted)">{{d.regNo}}</span>
+<button type="button" class="press" onClick="{{d.move}}" style="height:40px;padding:0 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-weight:600;font-size:13px;cursor:pointer">Ubah tahap</button>
+</div>
+<div style="flex:1;min-height:0;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;gap:12px;align-items:center">
+<span aria-hidden="true" style="flex:0 0 52px;height:52px;border-radius:999px;background:var(--primary-soft);color:var(--primary);font-size:18px;font-weight:700;display:inline-flex;align-items:center;justify-content:center">{{d.initials}}</span>
+<div style="min-width:0;display:flex;flex-direction:column"><h2 id="mdn" style="margin:0;font-size:19px;font-weight:700;line-height:1.25;{{d.nameStyle}}">{{d.nameText}}</h2><span style="font-size:13px;color:var(--muted)">{{d.level}} · daftar {{d.created}}</span></div>
+</div>
+<div style="display:flex;gap:6px;flex-wrap:wrap">
+<span style="display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;background:var(--surface2);border:1px solid var(--border)">Tahap: {{d.flow}}</span>
+<span style="display:inline-flex;align-items:center;height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;{{d.daysStyle}}">{{d.daysText}}</span>
+<sc-for list="{{d.flags}}" as="fl" hint-placeholder-count="1"><span style="display:inline-flex;align-items:center;gap:4px;height:26px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;background:var(--red-bg);color:var(--red-fg)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path><path d="M12 9v4M12 17h.01"></path></svg>{{fl}}</span></sc-for>
+</div>
+<section aria-label="Progress" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px">
+<ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+<sc-for list="{{d.steps}}" as="st" hint-placeholder-count="5">
+<li style="display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;min-height:44px">
+<span style="width:26px;height:26px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;{{st.dotStyle}}">
+<sc-if value="{{st.isDone}}" hint-placeholder-val="{{false}}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></sc-if>
+<sc-if value="{{st.isActive}}" hint-placeholder-val="{{false}}"><span aria-hidden="true" style="width:9px;height:9px;border-radius:999px;background:var(--blue-fg)"></span></sc-if>
+<sc-if value="{{st.isWait}}" hint-placeholder-val="{{false}}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg></sc-if>
+<sc-if value="{{st.isLate}}" hint-placeholder-val="{{false}}"><span aria-hidden="true" style="font-size:13px;font-weight:800;line-height:1">!</span></sc-if>
+</span>
+<span style="font-weight:600">{{st.label}}</span>
+<span style="font-size:12px;color:var(--muted);text-align:right">{{st.date}}</span>
+</li>
+</sc-for>
+</ol>
+</section>
+<div role="tablist" aria-label="Bagian data pendaftar" class="noscroll" style="flex:none;min-height:56px;position:sticky;top:-16px;z-index:5;display:flex;align-items:center;gap:8px;overflow-x:auto;overflow-y:hidden;margin:0 -16px;padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--border)">
+<sc-for list="{{v.tabs}}" as="t" hint-placeholder-count="7"><button type="button" role="tab" aria-selected="{{t.activeStr}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}<sc-if value="{{t.hasStat}}" hint-placeholder-val="{{true}}"><span style="margin-left:6px;font-size:11px;opacity:.85">{{t.stat}}</span></sc-if></button></sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:16px;padding:16px 0">
+<sc-if value="{{nav.hasBack}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+<button type="button" class="hov" onClick="{{nav.back}}" style="display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 12px 0 8px;border:1px solid var(--border);border-radius:8px;background:var(--surface);font-size:13px;font-weight:600;cursor:pointer"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"></path></svg>Kembali ke {{nav.backLabel}}</button>
+<span style="font-size:12px;color:var(--muted)">{{nav.trail}}</span>
+</div>
+</sc-if>
+<sc-if value="{{v.hasFilter}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+<span style="font-size:13px;color:var(--muted)">{{v.emptyHere}} field belum diisi di tab ini</span>
+<div role="group" aria-label="Tampilkan field" style="display:inline-flex;padding:3px;border-radius:8px;background:var(--surface2)">
+<button type="button" onClick="{{v.filterAll}}" aria-pressed="{{v.allPressed}}" style="{{v.allStyle}}">Semua field</button>
+<button type="button" onClick="{{v.filterEmpty}}" aria-pressed="{{v.emptyPressed}}" style="{{v.emptyStyle}}">Belum diisi saja</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{v.isOverview}}" hint-placeholder-val="{{true}}">
+<div style="display:grid;grid-template-columns:minmax(0,1fr);gap:16px">
+<section style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:baseline;justify-content:space-between;gap:8px"><h3 style="margin:0;font-size:15px;font-weight:700">Kelengkapan data</h3><strong style="font-size:22px">{{v.totalPct}}</strong></div>
+<span style="font-size:13px;color:var(--muted)">{{v.totalText}}</span>
+<sc-for list="{{v.complete}}" as="c" hint-placeholder-count="5">
+<button type="button" class="hov" onClick="{{c.go}}" style="display:flex;flex-direction:column;gap:6px;width:100%;padding:8px;margin:0 -8px;border:0;border-radius:8px;background:transparent;text-align:left;cursor:pointer">
+<span style="display:flex;justify-content:space-between;gap:8px;font-size:13px;width:100%"><span style="font-weight:600">{{c.label}}</span><span style="color:var(--muted)">{{c.a}}/{{c.b}}</span></span>
+<span aria-hidden="true" style="display:block;width:100%;height:6px;border-radius:999px;background:var(--surface2);overflow:hidden"><span style="display:block;height:100%;width:{{c.pct}}%;border-radius:999px;{{c.barStyle}}"></span></span>
+</button>
+</sc-for>
+</section>
+<section style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px">
+<h3 style="margin:0 0 4px;font-size:15px;font-weight:700">Perlu dilengkapi</h3>
+<sc-if value="{{v.noTodo}}" hint-placeholder-val="{{false}}"><p style="margin:0;font-size:13px;color:var(--green-fg);font-weight:600">Data utama dan dokumen wajib sudah lengkap.</p></sc-if>
+<sc-for list="{{v.todo}}" as="t" hint-placeholder-count="5">
+<button type="button" class="hov" onClick="{{t.go}}" style="display:flex;align-items:center;gap:10px;width:100%;min-height:40px;padding:6px 8px;margin:0 -8px;border:0;border-radius:8px;background:transparent;text-align:left;cursor:pointer">
+<span aria-hidden="true" style="flex:none;width:8px;height:8px;border-radius:999px;background:var(--amber-fg)"></span>
+<span style="flex:1;font-size:14px;font-weight:500">{{t.label}}</span>
+<span style="font-size:12px;color:var(--muted)">{{t.where}} →</span>
+</button>
+</sc-for>
+<sc-if value="{{v.hasTodoMore}}" hint-placeholder-val="{{false}}"><span style="font-size:12px;color:var(--muted)">{{v.todoMore}}</span></sc-if>
+</section>
+</div>
+<section style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap"><h3 style="margin:0;font-size:15px;font-weight:700">Informasi pendaftaran</h3>
+<div style="display:flex;gap:8px"><button type="button" class="hov" onClick="{{d.wa}}" style="display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);font-size:13px;font-weight:600;cursor:pointer">Chat WhatsApp</button><button type="button" class="hov" onClick="{{d.mail}}" style="display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);font-size:13px;font-weight:600;cursor:pointer">Kirim email</button></div></div>
+<dl style="margin:0;display:grid;grid-template-columns:minmax(0,1fr);gap:16px 24px">
+<sc-for list="{{v.reg}}" as="f" hint-placeholder-count="12">
+<div style="min-width:0;display:flex;flex-direction:column;gap:4px;{{f.wide}}">
+<dt style="font-size:12px;font-weight:600;color:var(--muted)">{{f.label}}</dt>
+<dd style="margin:0;min-width:0;font-size:14px;line-height:1.4;overflow-wrap:anywhere">
+<sc-if value="{{f.isText}}" hint-placeholder-val="{{true}}"><span style="font-weight:500;{{f.valStyle}}">{{f.text}}</span></sc-if>
+<sc-if value="{{f.isEmpty}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;border:1px dashed var(--border-strong);font-size:12px;color:var(--muted)">Belum diisi</span></sc-if>
+<sc-if value="{{f.isBadge}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;{{f.badgeStyle}}">{{f.text}}</span></sc-if>
+<sc-if value="{{f.isCheck}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;gap:6px;font-weight:500"><sc-if value="{{f.yes}}" hint-placeholder-val="{{true}}"><span aria-hidden="true" style="width:18px;height:18px;border-radius:5px;background:var(--primary);color:var(--on-primary);display:inline-flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span>Ya</sc-if><sc-if value="{{f.no}}" hint-placeholder-val="{{false}}"><span aria-hidden="true" style="width:18px;height:18px;border-radius:5px;border:2px solid var(--border-strong)"></span><span style="color:var(--muted)">Tidak</span></sc-if></span></sc-if>
+<sc-if value="{{f.isFile}}" hint-placeholder-val="{{false}}"><span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><sc-if value="{{f.uploaded}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;gap:6px;color:var(--green-fg);font-weight:500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg><span style="color:var(--text)">{{f.fileName}}</span></span></sc-if><sc-if value="{{f.missing}}" hint-placeholder-val="{{true}}"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;border:1px dashed var(--border-strong);font-size:12px;color:var(--muted)">Belum diunggah</span></sc-if><button type="button" class="hov" onClick="{{f.upload}}" style="height:28px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;font-weight:600;cursor:pointer">{{f.btn}}</button></span></sc-if>
+<sc-if value="{{f.isPhoto}}" hint-placeholder-val="{{false}}"><span style="display:flex;align-items:center;gap:12px"><span aria-hidden="true" style="width:64px;height:80px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;{{f.photoStyle}}">{{f.photoText}}</span><span style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><span style="font-size:13px;color:var(--muted)">{{f.fileName}}</span><button type="button" class="hov" onClick="{{f.upload}}" style="height:28px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;font-weight:600;cursor:pointer">{{f.btn}}</button></span></span></sc-if>
+</dd>
+</div>
+</sc-for>
+</dl>
+</section>
+</sc-if>
+
+<sc-if value="{{v.isProfil}}" hint-placeholder-val="{{false}}"><div style="display:flex;flex-direction:column;gap:16px"><sc-for list="{{v.profil}}" as="sec" hint-placeholder-count="3">
+<section style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;gap:10px"><span aria-hidden="true" style="flex:none;width:30px;height:30px;border-radius:8px;background:var(--primary-soft);color:var(--primary);display:inline-flex;align-items:center;justify-content:center"><sc-if value="{{sec.ic_user}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></sc-if><sc-if value="{{sec.ic_school}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10L12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c3 2 9 2 12 0v-5"></path></svg></sc-if><sc-if value="{{sec.ic_pin}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg></sc-if><sc-if value="{{sec.ic_heart}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"></path></svg></sc-if><sc-if value="{{sec.ic_card}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20"></path></svg></sc-if><sc-if value="{{sec.ic_bell}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></sc-if><sc-if value="{{sec.ic_phone}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"></path></svg></sc-if><sc-if value="{{sec.ic_id}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="11" r="2.5"></circle><path d="M14 10h4M14 14h4M6 17c.6-1.5 1.8-2.3 3-2.3s2.4.8 3 2.3"></path></svg></sc-if><sc-if value="{{sec.ic_chart}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"></path><path d="M7 15l4-4 3 3 5-6"></path></svg></sc-if></span><h3 style="flex:1;margin:0;font-size:15px;font-weight:700">{{sec.title}}</h3><span style="font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;{{sec.countStyle}}">{{sec.count}}</span></div>
+<sc-if value="{{sec.allDone}}" hint-placeholder-val="{{false}}"><p style="margin:0;font-size:13px;color:var(--green-fg);font-weight:600">Semua field di bagian ini sudah terisi.</p></sc-if>
+<dl style="margin:0;display:grid;grid-template-columns:minmax(0,1fr);gap:16px 24px">
+<sc-for list="{{sec.fields}}" as="f" hint-placeholder-count="4">
+<div style="min-width:0;display:flex;flex-direction:column;gap:4px;{{f.wide}}">
+<dt style="font-size:12px;font-weight:600;color:var(--muted)">{{f.label}}</dt>
+<dd style="margin:0;min-width:0;font-size:14px;line-height:1.4;overflow-wrap:anywhere">
+<sc-if value="{{f.isText}}" hint-placeholder-val="{{true}}"><span style="font-weight:500;{{f.valStyle}}">{{f.text}}</span></sc-if>
+<sc-if value="{{f.isEmpty}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;border:1px dashed var(--border-strong);font-size:12px;color:var(--muted)">Belum diisi</span></sc-if>
+<sc-if value="{{f.isBadge}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;{{f.badgeStyle}}">{{f.text}}</span></sc-if>
+<sc-if value="{{f.isCheck}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;gap:6px;font-weight:500"><sc-if value="{{f.yes}}" hint-placeholder-val="{{true}}"><span aria-hidden="true" style="width:18px;height:18px;border-radius:5px;background:var(--primary);color:var(--on-primary);display:inline-flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span>Ya</sc-if><sc-if value="{{f.no}}" hint-placeholder-val="{{false}}"><span aria-hidden="true" style="width:18px;height:18px;border-radius:5px;border:2px solid var(--border-strong)"></span><span style="color:var(--muted)">Tidak</span></sc-if></span></sc-if>
+<sc-if value="{{f.isFile}}" hint-placeholder-val="{{false}}"><span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><sc-if value="{{f.uploaded}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;gap:6px;color:var(--green-fg);font-weight:500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg><span style="color:var(--text)">{{f.fileName}}</span></span></sc-if><sc-if value="{{f.missing}}" hint-placeholder-val="{{true}}"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;border:1px dashed var(--border-strong);font-size:12px;color:var(--muted)">Belum diunggah</span></sc-if><button type="button" class="hov" onClick="{{f.upload}}" style="height:28px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;font-weight:600;cursor:pointer">{{f.btn}}</button></span></sc-if>
+<sc-if value="{{f.isPhoto}}" hint-placeholder-val="{{false}}"><span style="display:flex;align-items:center;gap:12px"><span aria-hidden="true" style="width:64px;height:80px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;{{f.photoStyle}}">{{f.photoText}}</span><span style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><span style="font-size:13px;color:var(--muted)">{{f.fileName}}</span><button type="button" class="hov" onClick="{{f.upload}}" style="height:28px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;font-weight:600;cursor:pointer">{{f.btn}}</button></span></span></sc-if>
+</dd>
+</div>
+</sc-for>
+</dl>
+</section>
+</sc-for></div></sc-if>
+<sc-if value="{{v.isKeluarga}}" hint-placeholder-val="{{false}}"><div style="display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start"><sc-for list="{{v.keluarga}}" as="sec" hint-placeholder-count="3">
+<section style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;gap:10px"><span aria-hidden="true" style="flex:none;width:30px;height:30px;border-radius:8px;background:var(--primary-soft);color:var(--primary);display:inline-flex;align-items:center;justify-content:center"><sc-if value="{{sec.ic_user}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></sc-if><sc-if value="{{sec.ic_school}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10L12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c3 2 9 2 12 0v-5"></path></svg></sc-if><sc-if value="{{sec.ic_pin}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg></sc-if><sc-if value="{{sec.ic_heart}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"></path></svg></sc-if><sc-if value="{{sec.ic_card}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20"></path></svg></sc-if><sc-if value="{{sec.ic_bell}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></sc-if><sc-if value="{{sec.ic_phone}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"></path></svg></sc-if><sc-if value="{{sec.ic_id}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="11" r="2.5"></circle><path d="M14 10h4M14 14h4M6 17c.6-1.5 1.8-2.3 3-2.3s2.4.8 3 2.3"></path></svg></sc-if><sc-if value="{{sec.ic_chart}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"></path><path d="M7 15l4-4 3 3 5-6"></path></svg></sc-if></span><h3 style="flex:1;margin:0;font-size:15px;font-weight:700">{{sec.title}}</h3><span style="font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;{{sec.countStyle}}">{{sec.count}}</span></div>
+<sc-if value="{{sec.allDone}}" hint-placeholder-val="{{false}}"><p style="margin:0;font-size:13px;color:var(--green-fg);font-weight:600">Semua field di bagian ini sudah terisi.</p></sc-if>
+<dl style="margin:0;display:grid;grid-template-columns:minmax(0,1fr);gap:16px 24px">
+<sc-for list="{{sec.fields}}" as="f" hint-placeholder-count="4">
+<div style="min-width:0;display:flex;flex-direction:column;gap:4px;{{f.wide}}">
+<dt style="font-size:12px;font-weight:600;color:var(--muted)">{{f.label}}</dt>
+<dd style="margin:0;min-width:0;font-size:14px;line-height:1.4;overflow-wrap:anywhere">
+<sc-if value="{{f.isText}}" hint-placeholder-val="{{true}}"><span style="font-weight:500;{{f.valStyle}}">{{f.text}}</span></sc-if>
+<sc-if value="{{f.isEmpty}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;border:1px dashed var(--border-strong);font-size:12px;color:var(--muted)">Belum diisi</span></sc-if>
+<sc-if value="{{f.isBadge}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;{{f.badgeStyle}}">{{f.text}}</span></sc-if>
+<sc-if value="{{f.isCheck}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;gap:6px;font-weight:500"><sc-if value="{{f.yes}}" hint-placeholder-val="{{true}}"><span aria-hidden="true" style="width:18px;height:18px;border-radius:5px;background:var(--primary);color:var(--on-primary);display:inline-flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span>Ya</sc-if><sc-if value="{{f.no}}" hint-placeholder-val="{{false}}"><span aria-hidden="true" style="width:18px;height:18px;border-radius:5px;border:2px solid var(--border-strong)"></span><span style="color:var(--muted)">Tidak</span></sc-if></span></sc-if>
+<sc-if value="{{f.isFile}}" hint-placeholder-val="{{false}}"><span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><sc-if value="{{f.uploaded}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;gap:6px;color:var(--green-fg);font-weight:500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg><span style="color:var(--text)">{{f.fileName}}</span></span></sc-if><sc-if value="{{f.missing}}" hint-placeholder-val="{{true}}"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;border:1px dashed var(--border-strong);font-size:12px;color:var(--muted)">Belum diunggah</span></sc-if><button type="button" class="hov" onClick="{{f.upload}}" style="height:28px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;font-weight:600;cursor:pointer">{{f.btn}}</button></span></sc-if>
+<sc-if value="{{f.isPhoto}}" hint-placeholder-val="{{false}}"><span style="display:flex;align-items:center;gap:12px"><span aria-hidden="true" style="width:64px;height:80px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;{{f.photoStyle}}">{{f.photoText}}</span><span style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><span style="font-size:13px;color:var(--muted)">{{f.fileName}}</span><button type="button" class="hov" onClick="{{f.upload}}" style="height:28px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;font-weight:600;cursor:pointer">{{f.btn}}</button></span></span></sc-if>
+</dd>
+</div>
+</sc-for>
+</dl>
+</section>
+</sc-for></div></sc-if>
+<sc-if value="{{v.isDapodik}}" hint-placeholder-val="{{false}}"><p style="margin:0;padding:10px 12px;border-radius:8px;background:var(--blue-bg);color:var(--blue-fg);font-size:13px;font-weight:500">Data ini dilaporkan ke Dapodik. Lengkapi sebelum sinkronisasi data siswa baru.</p><sc-for list="{{v.dapodik}}" as="sec" hint-placeholder-count="3">
+<section style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;gap:10px"><span aria-hidden="true" style="flex:none;width:30px;height:30px;border-radius:8px;background:var(--primary-soft);color:var(--primary);display:inline-flex;align-items:center;justify-content:center"><sc-if value="{{sec.ic_user}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></sc-if><sc-if value="{{sec.ic_school}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10L12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c3 2 9 2 12 0v-5"></path></svg></sc-if><sc-if value="{{sec.ic_pin}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg></sc-if><sc-if value="{{sec.ic_heart}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"></path></svg></sc-if><sc-if value="{{sec.ic_card}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20"></path></svg></sc-if><sc-if value="{{sec.ic_bell}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></sc-if><sc-if value="{{sec.ic_phone}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"></path></svg></sc-if><sc-if value="{{sec.ic_id}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="11" r="2.5"></circle><path d="M14 10h4M14 14h4M6 17c.6-1.5 1.8-2.3 3-2.3s2.4.8 3 2.3"></path></svg></sc-if><sc-if value="{{sec.ic_chart}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"></path><path d="M7 15l4-4 3 3 5-6"></path></svg></sc-if></span><h3 style="flex:1;margin:0;font-size:15px;font-weight:700">{{sec.title}}</h3><span style="font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;{{sec.countStyle}}">{{sec.count}}</span></div>
+<sc-if value="{{sec.allDone}}" hint-placeholder-val="{{false}}"><p style="margin:0;font-size:13px;color:var(--green-fg);font-weight:600">Semua field di bagian ini sudah terisi.</p></sc-if>
+<dl style="margin:0;display:grid;grid-template-columns:minmax(0,1fr);gap:16px 24px">
+<sc-for list="{{sec.fields}}" as="f" hint-placeholder-count="4">
+<div style="min-width:0;display:flex;flex-direction:column;gap:4px;{{f.wide}}">
+<dt style="font-size:12px;font-weight:600;color:var(--muted)">{{f.label}}</dt>
+<dd style="margin:0;min-width:0;font-size:14px;line-height:1.4;overflow-wrap:anywhere">
+<sc-if value="{{f.isText}}" hint-placeholder-val="{{true}}"><span style="font-weight:500;{{f.valStyle}}">{{f.text}}</span></sc-if>
+<sc-if value="{{f.isEmpty}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;border:1px dashed var(--border-strong);font-size:12px;color:var(--muted)">Belum diisi</span></sc-if>
+<sc-if value="{{f.isBadge}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;{{f.badgeStyle}}">{{f.text}}</span></sc-if>
+<sc-if value="{{f.isCheck}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;gap:6px;font-weight:500"><sc-if value="{{f.yes}}" hint-placeholder-val="{{true}}"><span aria-hidden="true" style="width:18px;height:18px;border-radius:5px;background:var(--primary);color:var(--on-primary);display:inline-flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span>Ya</sc-if><sc-if value="{{f.no}}" hint-placeholder-val="{{false}}"><span aria-hidden="true" style="width:18px;height:18px;border-radius:5px;border:2px solid var(--border-strong)"></span><span style="color:var(--muted)">Tidak</span></sc-if></span></sc-if>
+<sc-if value="{{f.isFile}}" hint-placeholder-val="{{false}}"><span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><sc-if value="{{f.uploaded}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;gap:6px;color:var(--green-fg);font-weight:500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg><span style="color:var(--text)">{{f.fileName}}</span></span></sc-if><sc-if value="{{f.missing}}" hint-placeholder-val="{{true}}"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;border:1px dashed var(--border-strong);font-size:12px;color:var(--muted)">Belum diunggah</span></sc-if><button type="button" class="hov" onClick="{{f.upload}}" style="height:28px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;font-weight:600;cursor:pointer">{{f.btn}}</button></span></sc-if>
+<sc-if value="{{f.isPhoto}}" hint-placeholder-val="{{false}}"><span style="display:flex;align-items:center;gap:12px"><span aria-hidden="true" style="width:64px;height:80px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;{{f.photoStyle}}">{{f.photoText}}</span><span style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><span style="font-size:13px;color:var(--muted)">{{f.fileName}}</span><button type="button" class="hov" onClick="{{f.upload}}" style="height:28px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;font-weight:600;cursor:pointer">{{f.btn}}</button></span></span></sc-if>
+</dd>
+</div>
+</sc-for>
+</dl>
+</section>
+</sc-for></sc-if>
+
+<sc-if value="{{v.isSeleksi}}" hint-placeholder-val="{{false}}">
+<ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column">
+<sc-for list="{{v.steps}}" as="sec" hint-placeholder-count="5">
+<li style="display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px">
+<div style="display:flex;flex-direction:column;align-items:center"><span style="flex:none;width:30px;height:30px;border-radius:999px;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;{{sec.nodeStyle}}"><sc-if value="{{sec.isDone}}" hint-placeholder-val="{{false}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></sc-if><sc-if value="{{sec.notDone}}" hint-placeholder-val="{{true}}">{{sec.n}}</sc-if></span><sc-if value="{{sec.hasLine}}" hint-placeholder-val="{{true}}"><span aria-hidden="true" style="flex:1;width:2px;min-height:16px;{{sec.lineStyle}}"></span></sc-if></div>
+<section style="margin-bottom:14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:12px;{{sec.cardStyle}}">
+<div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap"><h3 style="flex:1;margin:0;font-size:15px;font-weight:700">{{sec.title}}</h3><span style="font-size:12px;color:var(--muted)">{{sec.date}}</span><span style="display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;{{sec.statusStyle}}">{{sec.status}}</span></div>
+<sc-if value="{{sec.allDone}}" hint-placeholder-val="{{false}}"><p style="margin:0;font-size:13px;color:var(--green-fg);font-weight:600">Semua field di tahap ini sudah terisi.</p></sc-if>
+<dl style="margin:0;display:grid;grid-template-columns:minmax(0,1fr);gap:14px 20px">
+<sc-for list="{{sec.fields}}" as="f" hint-placeholder-count="4">
+<div style="min-width:0;display:flex;flex-direction:column;gap:4px;{{f.wide}}">
+<dt style="font-size:12px;font-weight:600;color:var(--muted)">{{f.label}}</dt>
+<dd style="margin:0;min-width:0;font-size:14px;line-height:1.4;overflow-wrap:anywhere">
+<sc-if value="{{f.isText}}" hint-placeholder-val="{{true}}"><span style="font-weight:500;{{f.valStyle}}">{{f.text}}</span></sc-if>
+<sc-if value="{{f.isEmpty}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;border:1px dashed var(--border-strong);font-size:12px;color:var(--muted)">Belum diisi</span></sc-if>
+<sc-if value="{{f.isBadge}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;{{f.badgeStyle}}">{{f.text}}</span></sc-if>
+<sc-if value="{{f.isCheck}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;gap:6px;font-weight:500"><sc-if value="{{f.yes}}" hint-placeholder-val="{{true}}"><span aria-hidden="true" style="width:18px;height:18px;border-radius:5px;background:var(--primary);color:var(--on-primary);display:inline-flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span>Ya</sc-if><sc-if value="{{f.no}}" hint-placeholder-val="{{false}}"><span aria-hidden="true" style="width:18px;height:18px;border-radius:5px;border:2px solid var(--border-strong)"></span><span style="color:var(--muted)">Tidak</span></sc-if></span></sc-if>
+<sc-if value="{{f.isFile}}" hint-placeholder-val="{{false}}"><span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><sc-if value="{{f.uploaded}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;gap:6px;color:var(--green-fg);font-weight:500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg><span style="color:var(--text)">{{f.fileName}}</span></span></sc-if><sc-if value="{{f.missing}}" hint-placeholder-val="{{true}}"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;border:1px dashed var(--border-strong);font-size:12px;color:var(--muted)">Belum diunggah</span></sc-if><button type="button" class="hov" onClick="{{f.upload}}" style="height:28px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;font-weight:600;cursor:pointer">{{f.btn}}</button></span></sc-if>
+<sc-if value="{{f.isPhoto}}" hint-placeholder-val="{{false}}"><span style="display:flex;align-items:center;gap:12px"><span aria-hidden="true" style="width:64px;height:80px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;{{f.photoStyle}}">{{f.photoText}}</span><span style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><span style="font-size:13px;color:var(--muted)">{{f.fileName}}</span><button type="button" class="hov" onClick="{{f.upload}}" style="height:28px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;font-weight:600;cursor:pointer">{{f.btn}}</button></span></span></sc-if>
+</dd>
+</div>
+</sc-for>
+</dl>
+</section>
+</li>
+</sc-for>
+</ol>
+<div style="display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start"><sc-for list="{{v.selExtra}}" as="sec" hint-placeholder-count="3">
+<section style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:14px">
+<div style="display:flex;align-items:center;gap:10px"><span aria-hidden="true" style="flex:none;width:30px;height:30px;border-radius:8px;background:var(--primary-soft);color:var(--primary);display:inline-flex;align-items:center;justify-content:center"><sc-if value="{{sec.ic_user}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21a8 8 0 0 1 16 0"></path></svg></sc-if><sc-if value="{{sec.ic_school}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10L12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c3 2 9 2 12 0v-5"></path></svg></sc-if><sc-if value="{{sec.ic_pin}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg></sc-if><sc-if value="{{sec.ic_heart}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"></path></svg></sc-if><sc-if value="{{sec.ic_card}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M2 10h20"></path></svg></sc-if><sc-if value="{{sec.ic_bell}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg></sc-if><sc-if value="{{sec.ic_phone}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"></path></svg></sc-if><sc-if value="{{sec.ic_id}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="11" r="2.5"></circle><path d="M14 10h4M14 14h4M6 17c.6-1.5 1.8-2.3 3-2.3s2.4.8 3 2.3"></path></svg></sc-if><sc-if value="{{sec.ic_chart}}" hint-placeholder-val="{{false}}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"></path><path d="M7 15l4-4 3 3 5-6"></path></svg></sc-if></span><h3 style="flex:1;margin:0;font-size:15px;font-weight:700">{{sec.title}}</h3><span style="font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;{{sec.countStyle}}">{{sec.count}}</span></div>
+<sc-if value="{{sec.allDone}}" hint-placeholder-val="{{false}}"><p style="margin:0;font-size:13px;color:var(--green-fg);font-weight:600">Semua field di bagian ini sudah terisi.</p></sc-if>
+<dl style="margin:0;display:grid;grid-template-columns:minmax(0,1fr);gap:16px 24px">
+<sc-for list="{{sec.fields}}" as="f" hint-placeholder-count="4">
+<div style="min-width:0;display:flex;flex-direction:column;gap:4px;{{f.wide}}">
+<dt style="font-size:12px;font-weight:600;color:var(--muted)">{{f.label}}</dt>
+<dd style="margin:0;min-width:0;font-size:14px;line-height:1.4;overflow-wrap:anywhere">
+<sc-if value="{{f.isText}}" hint-placeholder-val="{{true}}"><span style="font-weight:500;{{f.valStyle}}">{{f.text}}</span></sc-if>
+<sc-if value="{{f.isEmpty}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;border:1px dashed var(--border-strong);font-size:12px;color:var(--muted)">Belum diisi</span></sc-if>
+<sc-if value="{{f.isBadge}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;{{f.badgeStyle}}">{{f.text}}</span></sc-if>
+<sc-if value="{{f.isCheck}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;gap:6px;font-weight:500"><sc-if value="{{f.yes}}" hint-placeholder-val="{{true}}"><span aria-hidden="true" style="width:18px;height:18px;border-radius:5px;background:var(--primary);color:var(--on-primary);display:inline-flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span>Ya</sc-if><sc-if value="{{f.no}}" hint-placeholder-val="{{false}}"><span aria-hidden="true" style="width:18px;height:18px;border-radius:5px;border:2px solid var(--border-strong)"></span><span style="color:var(--muted)">Tidak</span></sc-if></span></sc-if>
+<sc-if value="{{f.isFile}}" hint-placeholder-val="{{false}}"><span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><sc-if value="{{f.uploaded}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;gap:6px;color:var(--green-fg);font-weight:500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg><span style="color:var(--text)">{{f.fileName}}</span></span></sc-if><sc-if value="{{f.missing}}" hint-placeholder-val="{{true}}"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;border:1px dashed var(--border-strong);font-size:12px;color:var(--muted)">Belum diunggah</span></sc-if><button type="button" class="hov" onClick="{{f.upload}}" style="height:28px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;font-weight:600;cursor:pointer">{{f.btn}}</button></span></sc-if>
+<sc-if value="{{f.isPhoto}}" hint-placeholder-val="{{false}}"><span style="display:flex;align-items:center;gap:12px"><span aria-hidden="true" style="width:64px;height:80px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;{{f.photoStyle}}">{{f.photoText}}</span><span style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><span style="font-size:13px;color:var(--muted)">{{f.fileName}}</span><button type="button" class="hov" onClick="{{f.upload}}" style="height:28px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;font-weight:600;cursor:pointer">{{f.btn}}</button></span></span></sc-if>
+</dd>
+</div>
+</sc-for>
+</dl>
+</section>
+</sc-for></div>
+</sc-if>
+
+<sc-if value="{{v.isDokumen}}" hint-placeholder-val="{{false}}">
+<section style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px"><h3 style="margin:0;font-size:15px;font-weight:700">Kelengkapan dokumen</h3><span style="font-size:13px;color:var(--muted)">{{v.docsText}}</span></div>
+<span aria-hidden="true" style="display:block;height:8px;border-radius:999px;background:var(--surface2);overflow:hidden"><span style="display:block;height:100%;width:{{v.docsPct}}%;background:var(--primary);border-radius:999px"></span></span>
+<dl style="margin:6px 0 0;display:grid;grid-template-columns:minmax(0,1fr);gap:14px 24px">
+<sc-for list="{{v.docIds}}" as="f" hint-placeholder-count="2">
+<div style="min-width:0;display:flex;flex-direction:column;gap:4px;{{f.wide}}">
+<dt style="font-size:12px;font-weight:600;color:var(--muted)">{{f.label}}</dt>
+<dd style="margin:0;min-width:0;font-size:14px;line-height:1.4;overflow-wrap:anywhere">
+<sc-if value="{{f.isText}}" hint-placeholder-val="{{true}}"><span style="font-weight:500;{{f.valStyle}}">{{f.text}}</span></sc-if>
+<sc-if value="{{f.isEmpty}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;border:1px dashed var(--border-strong);font-size:12px;color:var(--muted)">Belum diisi</span></sc-if>
+<sc-if value="{{f.isBadge}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:600;{{f.badgeStyle}}">{{f.text}}</span></sc-if>
+<sc-if value="{{f.isCheck}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;gap:6px;font-weight:500"><sc-if value="{{f.yes}}" hint-placeholder-val="{{true}}"><span aria-hidden="true" style="width:18px;height:18px;border-radius:5px;background:var(--primary);color:var(--on-primary);display:inline-flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></span>Ya</sc-if><sc-if value="{{f.no}}" hint-placeholder-val="{{false}}"><span aria-hidden="true" style="width:18px;height:18px;border-radius:5px;border:2px solid var(--border-strong)"></span><span style="color:var(--muted)">Tidak</span></sc-if></span></sc-if>
+<sc-if value="{{f.isFile}}" hint-placeholder-val="{{false}}"><span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><sc-if value="{{f.uploaded}}" hint-placeholder-val="{{false}}"><span style="display:inline-flex;align-items:center;gap:6px;color:var(--green-fg);font-weight:500"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6"></path></svg><span style="color:var(--text)">{{f.fileName}}</span></span></sc-if><sc-if value="{{f.missing}}" hint-placeholder-val="{{true}}"><span style="display:inline-flex;align-items:center;height:22px;padding:0 8px;border-radius:6px;border:1px dashed var(--border-strong);font-size:12px;color:var(--muted)">Belum diunggah</span></sc-if><button type="button" class="hov" onClick="{{f.upload}}" style="height:28px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;font-weight:600;cursor:pointer">{{f.btn}}</button></span></sc-if>
+<sc-if value="{{f.isPhoto}}" hint-placeholder-val="{{false}}"><span style="display:flex;align-items:center;gap:12px"><span aria-hidden="true" style="width:64px;height:80px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;{{f.photoStyle}}">{{f.photoText}}</span><span style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><span style="font-size:13px;color:var(--muted)">{{f.fileName}}</span><button type="button" class="hov" onClick="{{f.upload}}" style="height:28px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;font-weight:600;cursor:pointer">{{f.btn}}</button></span></span></sc-if>
+</dd>
+</div>
+</sc-for>
+</dl>
+</section>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100%,1fr));gap:12px">
+<sc-for list="{{v.docFiles}}" as="f" hint-placeholder-count="9">
+<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;display:flex;gap:12px;align-items:flex-start;{{f.tileStyle}}">
+<span aria-hidden="true" style="flex:none;width:36px;height:36px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;{{f.iconStyle}}"><sc-if value="{{f.uploaded}}" hint-placeholder-val="{{false}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"></path></svg></sc-if><sc-if value="{{f.missing}}" hint-placeholder-val="{{true}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"></path><path d="M7 9l5-5 5 5"></path><path d="M5 20h14"></path></svg></sc-if></span>
+<div style="min-width:0;flex:1;display:flex;flex-direction:column;gap:2px">
+<strong style="font-size:14px">{{f.label}}</strong>
+<span style="font-size:12px;font-weight:600;{{f.statusStyle}}">{{f.statusText}}</span>
+<span style="font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{f.fname}}</span>
+<button type="button" class="hov" onClick="{{f.upload}}" style="align-self:flex-start;margin-top:6px;height:28px;padding:0 10px;border:1px solid var(--border);border-radius:6px;background:var(--surface);font-size:12px;font-weight:600;cursor:pointer">{{f.btn}}</button>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{v.isHistory}}" hint-placeholder-val="{{false}}">
+<div style="background:var(--surface);border:1px dashed var(--border-strong);border-radius:12px;padding:40px 24px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px"><strong style="font-size:15px">Belum ada riwayat level</strong><span style="font-size:13px;color:var(--muted);max-width:420px">{{v.historyText}}</span></div>
+</sc-if>
+</div>
+</div>
+<div style="flex:none;display:flex;gap:8px;padding:12px 16px;background:var(--surface);border-top:1px solid var(--border)">
+<button type="button" onClick="{{d.wa}}" aria-label="WhatsApp orang tua" style="flex:0 0 52px;height:48px;border:1px solid var(--border);border-radius:10px;background:var(--surface);display:inline-flex;align-items:center;justify-content:center;cursor:pointer"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 21l2.1-5.6A8.4 8.4 0 1 1 21 11.5z"></path></svg></button>
+<button type="button" onClick="{{d.primary}}" style="flex:1;height:48px;border:0;border-radius:10px;background:var(--primary);color:var(--on-primary);font-weight:700;font-size:15px;cursor:pointer">{{d.actionLong}}</button>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{hasSheet}}" hint-placeholder-val="{{false}}">
+<div style="position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;justify-content:flex-end">
+<button type="button" aria-label="Tutup" onClick="{{closeSheet}}" style="position:absolute;inset:0;border:0;background:var(--overlay);cursor:default"></button>
+<div role="dialog" aria-modal="true" aria-labelledby="shh" style="position:relative;background:var(--surface);border-radius:16px 16px 0 0;padding:8px 16px 20px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow)">
+<span aria-hidden="true" style="align-self:center;width:40px;height:4px;border-radius:999px;background:var(--border-strong)"></span>
+<h2 id="shh" style="margin:0;font-size:17px">{{sheet.title}}</h2>
+<sc-if value="{{sheet.isSchool}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-direction:column;gap:2px;max-height:520px;overflow-y:auto">
+<sc-for list="{{schools}}" as="sc" hint-placeholder-count="9">
+<button type="button" onClick="{{sc.pick}}" aria-current="{{sc.current}}" style="{{sc.style}}"><span style="flex:1">{{sc.name}}</span><sc-if value="{{sc.isCur}}" hint-placeholder-val="{{false}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"></path></svg></sc-if></button>
+</sc-for>
+</div>
+</sc-if>
+<sc-if value="{{sheet.isFilter}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-direction:column;gap:12px">
+<label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Tahun ajaran
+<select value="{{year}}" onChange="{{onYear}}" style="height:44px;padding:0 10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-size:15px;font-weight:500">
+<option value="all">Semua</option><option value="2028/2029">2028/2029</option><option value="2027/2028">2027/2028</option><option value="2026/2027">2026/2027</option><option value="2025/2026">2025/2026</option><option value="2024/2025">2024/2025</option><option value="2023/2024">2023/2024</option><option value="2022/2023">2022/2023</option>
+</select></label>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Level
+<select value="{{level}}" onChange="{{onLevel}}" style="height:44px;padding:0 10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-size:15px;font-weight:500">
+<option value="all">Semua level</option><option value="Kindergarten 1">Kindergarten 1</option><option value="Kindergarten 2">Kindergarten 2</option><option value="Grade 1">Grade 1</option><option value="Grade 2">Grade 2</option><option value="Grade 3">Grade 3</option><option value="Grade 4">Grade 4</option><option value="Grade 5">Grade 5</option><option value="Grade 6">Grade 6</option><option value="Grade 7">Grade 7</option><option value="Grade 8">Grade 8</option><option value="Grade 9">Grade 9</option><option value="Grade 10">Grade 10</option><option value="Grade 11">Grade 11</option><option value="Grade 12">Grade 12</option>
+</select></label>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Status
+<select value="{{status}}" onChange="{{onStatus}}" style="height:44px;padding:0 10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-size:15px;font-weight:500">
+<option value="all">Semua status</option><option value="late">Terlambat (macet)</option><option value="issue">Data bermasalah</option><option value="form">Formulir belum dibayar</option><option value="psy">Psikotes belum selesai</option><option value="itv">Wawancara belum selesai</option><option value="tuition">Tuition belum lunas</option>
+</select></label>
+<div style="display:flex;gap:8px"><button type="button" onClick="{{resetFilters}}" style="flex:1;height:48px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-weight:600;cursor:pointer">Reset</button><button type="button" onClick="{{closeSheet}}" style="flex:2;height:48px;border:0;border-radius:10px;background:var(--primary);color:var(--on-primary);font-weight:700;cursor:pointer">Tampilkan {{filteredCount}} hasil</button></div>
+</div>
+</sc-if>
+<sc-if value="{{sheet.isMove}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-direction:column;gap:12px">
+<p style="margin:0;font-size:14px">{{sheet.body}}</p>
+<label style="display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600">Tahap tujuan
+<select value="{{sheet.to}}" onChange="{{sheet.onTo}}" style="height:44px;padding:0 10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-size:15px;font-weight:500">
+<option value="Leads">Leads</option><option value="Register">Register</option><option value="Payment">Payment</option><option value="Tuition">Tuition</option><option value="Waiting List">Waiting List</option><option value="Invalid">Invalid</option>
+</select></label>
+<p style="margin:0;font-size:12px;color:var(--muted)">Perpindahan dicatat di timeline. Orang tua tidak otomatis dinotifikasi.</p>
+<div style="display:flex;gap:8px"><button type="button" onClick="{{closeSheet}}" style="flex:1;height:48px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-weight:600;cursor:pointer">Batal</button><button type="button" onClick="{{sheet.confirm}}" style="flex:2;height:48px;border:0;border-radius:10px;background:var(--primary);color:var(--on-primary);font-weight:700;cursor:pointer">Ya, pindahkan</button></div>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{false}}">
+<div role="status" aria-live="polite" style="position:absolute;left:16px;right:16px;bottom:84px;z-index:40;background:var(--text);color:var(--surface);padding:12px 14px;border-radius:10px;font-size:13px;font-weight:500">{{toast}}</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"simState":{"editor":"enum","options":["normal","loading","empty","error","noaccess"],"default":"normal"},"stuckDays":{"editor":"int","min":1,"max":30,"default":7},"startTab":{"editor":"enum","options":["home","list","act"],"default":"list"},"startSchool":{"editor":"enum","options":["sd-tj-bdg","sd-tj-cmh","sd-tj-pku","smp-tj-bdg","smp-tj-pku","kg-kinder","kg-primary","kg-sec","kg-hs"],"default":"kg-sec"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  NOW() { return new Date(2026, 9, 27, 10, 0).getTime(); }
+  fmt(t, tm) {
+    var M = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+    var d = new Date(t); var s = d.getDate() + ' ' + M[d.getMonth()] + ' ' + d.getFullYear();
+    if (tm) s += ', ' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+    return s;
+  }
+  rp(n) { return 'Rp ' + String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, '.'); }
+  rpShort(n) { if (n >= 1e9) return 'Rp ' + (n / 1e9).toFixed(2).replace('.', ',') + ' M'; if (n >= 1e6) return 'Rp ' + Math.round(n / 1e6) + ' jt'; return this.rp(n); }
+  initials(n) { if (!n) return '?'; var p = n.split(' '); return (p[0][0] + (p[1] ? p[1][0] : '')).toUpperCase(); }
+  tone(t) { return 'background:var(--' + t + '-bg);color:var(--' + t + '-fg)'; }
+
+  SCHOOLS() {
+    return {
+      'sd-tj-bdg': { name: 'SD Talenta Juara Bandung', seed: 101, target: 2400000000, nom: [9500000, 11000000, 12500000],
+        levels: [['Grade 1', .55, 90], ['Grade 2', .1, 12], ['Grade 3', .1, 10], ['Grade 4', .1, 10], ['Grade 5', .08, 8], ['Grade 6', .07, 6]],
+        flows: { 'Leads': 34, 'Register': 58, 'Payment': 41, 'Tuition': 182, 'Waiting List': 9 },
+        years: { '2028/2029': 6, '2027/2028': 118, '2026/2027': 72, '2025/2026': 68, '2024/2025': 40, '2023/2024': 20 } },
+      'sd-tj-cmh': { name: 'SD Talenta Juara Cimahi', seed: 102, target: 1300000000, nom: [8500000, 10000000, 11500000],
+        levels: [['Grade 1', .6, 60], ['Grade 2', .1, 8], ['Grade 3', .1, 8], ['Grade 4', .08, 6], ['Grade 5', .07, 5], ['Grade 6', .05, 4]],
+        flows: { 'Leads': 18, 'Register': 30, 'Payment': 26, 'Tuition': 104 },
+        years: { '2028/2029': 2, '2027/2028': 70, '2026/2027': 46, '2025/2026': 38, '2024/2025': 22 } },
+      'sd-tj-pku': { name: 'SD Talenta Juara Pekanbaru', seed: 103, target: 1100000000, nom: [8500000, 9500000, 11000000],
+        levels: [['Grade 1', .62, 56], ['Grade 2', .1, 8], ['Grade 3', .08, 6], ['Grade 4', .08, 6], ['Grade 5', .07, 5], ['Grade 6', .05, 4]],
+        flows: { 'Leads': 15, 'Register': 22, 'Payment': 19, 'Tuition': 88, 'Invalid': 2 },
+        years: { '2027/2028': 58, '2026/2027': 40, '2025/2026': 30, '2024/2025': 18 } },
+      'smp-tj-bdg': { name: 'SMP Talenta Juara Bandung', seed: 104, target: 2800000000, nom: [12500000, 14000000, 15500000],
+        levels: [['Grade 7', .82, 160], ['Grade 8', .11, 16], ['Grade 9', .07, 8]],
+        flows: { 'Leads': 59, 'Register': 91, 'Payment': 62, 'Tuition': 431, 'Invalid': 3 },
+        years: { '2028/2029': 3, '2027/2028': 134, '2026/2027': 114, '2025/2026': 148, '2024/2025': 76, '2023/2024': 75, '2022/2023': 96 } },
+      'smp-tj-pku': { name: 'SMP Talenta Juara Pekanbaru', seed: 105, target: 1200000000, nom: [11000000, 12500000, 14000000],
+        levels: [['Grade 7', .8, 70], ['Grade 8', .12, 8], ['Grade 9', .08, 5]],
+        flows: { 'Leads': 12, 'Register': 24, 'Payment': 20, 'Tuition': 79, 'Waiting List': 4 },
+        years: { '2027/2028': 61, '2026/2027': 44, '2025/2026': 34 } },
+      'kg-kinder': { name: 'Kreativa Global Kindergarten', seed: 106, target: 900000000, nom: [14000000, 16500000, 18000000],
+        levels: [['Kindergarten 1', .55, 48], ['Kindergarten 2', .45, 36]],
+        flows: { 'Leads': 9, 'Register': 17, 'Payment': 14, 'Tuition': 48, 'Waiting List': 3 },
+        years: { '2028/2029': 4, '2027/2028': 47, '2026/2027': 40 } },
+      'kg-primary': { name: 'Kreativa Global Primary', seed: 107, target: 1800000000, nom: [15000000, 17500000, 19500000],
+        levels: [['Grade 1', .58, 60], ['Grade 2', .1, 10], ['Grade 3', .1, 10], ['Grade 4', .09, 8], ['Grade 5', .07, 6], ['Grade 6', .06, 5]],
+        flows: { 'Leads': 14, 'Register': 38, 'Payment': 41, 'Tuition': 109, 'Waiting List': 7 },
+        years: { '2028/2029': 8, '2027/2028': 121, '2026/2027': 80 } },
+      'kg-sec': { name: 'Kreativa Global Secondary', seed: 20261027, target: 1500000000, nom: [12500000, 15000000, 17500000, 18500000, 21000000],
+        levels: [['Grade 7', .78, 120], ['Grade 8', .14, 20], ['Grade 9', .08, 10]],
+        flows: { 'Leads': 11, 'Register': 55, 'Payment': 74, 'Tuition': 87, 'Waiting List': 11 },
+        years: { '2028/2029': 11, '2027/2028': 179, '2026/2027': 47, '2022/2023': 1 } },
+      'kg-hs': { name: 'Kreativa Global High School', seed: 109, target: 1400000000, nom: [18500000, 21000000, 24500000],
+        levels: [['Grade 10', .75, 60], ['Grade 11', .15, 15], ['Grade 12', .1, 8]],
+        flows: { 'Leads': 8, 'Register': 21, 'Payment': 26, 'Tuition': 58, 'Waiting List': 5 },
+        years: { '2028/2029': 3, '2027/2028': 72, '2026/2027': 43 } }
+    };
+  }
+
+  buildData(sid) {
+    var cfg = this.SCHOOLS()[sid];
+    var seed = cfg.seed;
+    var r = function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+    var pick = function (a) { return a[Math.floor(r() * a.length)]; };
+    var wpick = function (p) { var x = r(), c = 0; for (var i = 0; i < p.length; i++) { c += p[i][1]; if (x < c) return p[i][0]; } return p[p.length - 1][0]; };
+    var shuffle = function (a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; };
+    var NOW = this.NOW(), DAY = 86400000;
+    var F1 = ['Aisyah','Alya','Arkan','Bima','Citra','Daffa','Dzaky','Fathan','Ghina','Hafiz','Kayla','Keenan','Naura','Nayla','Rafa','Raisa','Salma','Syifa','Zahra','Zidan','Athaya','Barra','Kenzo','Shakira','Faiz','Alesha','Hanif','Qiana','Rasya','Yasmin','Nadhif','Kirana','Azka','Humaira','Lubna','Malik'];
+    var F2 = ['Putri','Ramadhan','Pratama','Azzahra','Maulana','Nugraha','Wibowo','Hidayat','Kusuma','Saputra','Anindita','Prasetyo','Rahman','Firdaus','Lestari','Santoso','Wijaya','Permana','Aulia','Hakim','Fauzan','Nabila'];
+    var P = ['Dewi Anggraini','Budi Santoso','Siti Rahmawati','Agus Setiawan','Rina Marlina','Hendra Gunawan','Wulan Sari','Eko Prasetyo','Fitri Handayani','Andi Wijaya','Yuni Kartika','Rudi Hartono','Lina Susanti','Dedi Kurniawan','Maya Puspita','Arif Hidayat','Nur Aini','Teguh Saputra','Ratna Dewi','Irfan Maulana','Sri Wahyuni','Asep Supriatna'];
+    var OFF = ['Rina Oktaviani','Dimas Pradana','Sari Wulandari','Yoga Firmansyah'];
+    var SRC = [['Website',.38],['Instagram',.22],['Referensi orang tua',.18],['Open House',.14],['WhatsApp',.08]];
+    var LVL = cfg.levels.map(function (l) { return [l[0], l[1]]; });
+    var active = { '2027/2028': 1, '2028/2029': 1 };
+    var yrs = []; Object.keys(cfg.years).forEach(function (y) { for (var i = 0; i < cfg.years[y]; i++) yrs.push(y); });
+    yrs.sort(function (a, b) { return (active[a] ? 1 : 0) - (active[b] ? 1 : 0); });
+    var tLeft = cfg.flows['Tuition'] || 0, pool = [];
+    var activeCount = yrs.filter(function (y) { return active[y]; }).length;
+    var tRes = Math.min(tLeft, Math.round(activeCount * 0.3)), tOld = tLeft - tRes;
+    Object.keys(cfg.flows).forEach(function (f) { if (f !== 'Tuition') for (var i = 0; i < cfg.flows[f]; i++) pool.push(f); });
+    shuffle(pool);
+    var assigned = [], rest = null;
+    for (var k = 0; k < yrs.length; k++) {
+      var y = yrs[k], f;
+      if (!active[y]) { if (tOld > 0) { f = 'Tuition'; tOld--; } else f = pool.pop(); }
+      else { if (!rest) { rest = pool.slice(); for (var q = 0; q < tRes + tOld; q++) rest.push('Tuition'); shuffle(rest); } f = rest.pop(); }
+      assigned.push([y, f]);
+    }
+    var out = [];
+    for (var k2 = 0; k2 < assigned.length; k2++) {
+      var y2 = assigned[k2][0], flow = assigned[k2][1], old = !active[y2];
+      var created;
+      if (y2 === '2028/2029') created = NOW - (2 + r() * 45) * DAY;
+      else if (y2 === '2027/2028') created = NOW - (0.05 + Math.pow(r(), 1.5) * 150) * DAY;
+      else { var sy = parseInt(y2.slice(0, 4), 10); created = new Date(sy - 1, 9, 1, 8).getTime() + r() * 240 * DAY; }
+      var age = (NOW - created) / DAY;
+      var maxS = { 'Leads': 14, 'Register': 21, 'Payment': 24, 'Tuition': 30, 'Waiting List': 20, 'Invalid': 10 }[flow];
+      var days = old ? Math.floor(age) : Math.min(Math.floor(age), Math.floor(r() * maxS));
+      var psy = false, itv = false, tdone = false, nom = 0;
+      if (flow === 'Payment') { psy = r() < .55; itv = psy && r() < .45; }
+      if (flow === 'Tuition' || flow === 'Waiting List') { psy = true; itv = true; nom = pick(cfg.nom); }
+      if (flow === 'Tuition') { tdone = old ? true : r() < .55; if (!tdone && r() < .3) nom = 0; }
+      var nm = pick(F1) + ' ' + pick(F2) + (r() < .35 ? ' ' + pick(F2) : '');
+      var par = pick(P);
+      var ph = '0812-' + (1000 + Math.floor(r() * 8999)) + '-' + (1000 + Math.floor(r() * 8999));
+      var slot = [9, 10.5, 13, 14.5][Math.floor(r() * 4)];
+      out.push({ id: sid + '-' + k2, name: nm, parent: par, level: wpick(LVL), year: y2, active: !old, created: created, source: wpick(SRC), officer: pick(OFF), phone: ph, email: par.toLowerCase().replace(/ /g, '.') + '@email.com', flow: flow, days: days, psy: psy, itv: itv, tdone: tdone, nominal: nom, sched: NOW - 10 * 3600000 + (1 + Math.floor(r() * 6)) * DAY + slot * 3600000 });
+    }
+    out.sort(function (a, b) { return a.created - b.created; });
+    var seq = {};
+    out.forEach(function (o) { var yr = new Date(o.created).getFullYear(); seq[yr] = (seq[yr] || 0) + 1; o.regNo = 'REG-' + yr + '-' + ('000' + seq[yr]).slice(-4); });
+    out.reverse();
+    [2, 13, 58, 122].forEach(function (ix) { if (out[ix]) out[ix].name = ''; });
+    return out;
+  }
+
+  appForm(D, CFG, sid, toast) {
+    var self = this, NOW = this.NOW(), DAY = 86400000;
+    var h = 7; for (var i = 0; i < D.id.length; i++) h = (h * 31 + D.id.charCodeAt(i)) % 2147483647;
+    var rn = function (k) { var x = Math.sin((h % 100000) * 0.731 + (k + 1) * 12.9898) * 43758.5453; return x - Math.floor(x); };
+    var pick = function (a, k) { return a[Math.floor(rn(k) * a.length)]; };
+    var digits = function (n, k) { var s = ''; for (var j = 0; j < n; j++) s += Math.floor(rn(k * 37 + j) * 10); return s; };
+    var tone = function (t) { return self.tone(t); };
+    var fmtD = function (t) { return self.fmt(t, false); };
+    var cap = function (w) { return w.toLowerCase().replace(/(^|\s)\S/g, function (m) { return m.toUpperCase(); }); };
+    // ---- context
+    var CITY = { 'sd-tj-bdg': 'KOTA BANDUNG', 'sd-tj-cmh': 'KOTA CIMAHI', 'sd-tj-pku': 'KOTA PEKANBARU', 'smp-tj-bdg': 'KOTA BANDUNG', 'smp-tj-pku': 'KOTA PEKANBARU' }[sid] || 'KOTA BANDUNG';
+    var PROV = CITY === 'KOTA PEKANBARU' ? 'RIAU' : 'JAWA BARAT';
+    var AREA = { 'KOTA BANDUNG': [['COBLONG', 'DAGO', '40135'], ['BUAHBATU', 'MARGASARI', '40286'], ['ANTAPANI', 'ANTAPANI KIDUL', '40291'], ['SUKAJADI', 'PASTEUR', '40161']], 'KOTA CIMAHI': [['CIMAHI UTARA', 'CIBABAT', '40513'], ['CIMAHI TENGAH', 'BAROS', '40521'], ['CIMAHI SELATAN', 'LEUWIGAJAH', '40532']], 'KOTA PEKANBARU': [['TENAYAN RAYA', 'SIALANGSAKTI', '28285'], ['MARPOYAN DAMAI', 'TANGKERANG BARAT', '28282'], ['BUKIT RAYA', 'SIMPANG TIGA', '28284']] }[CITY];
+    var area = pick(AREA, 1);
+    var LATLON = { 'KOTA BANDUNG': [-6.91, 107.61], 'KOTA CIMAHI': [-6.88, 107.54], 'KOTA PEKANBARU': [0.51, 101.45] }[CITY];
+    var CODE = { 'sd-tj-bdg': '01', 'sd-tj-cmh': '04', 'sd-tj-pku': '11', 'smp-tj-bdg': '16', 'smp-tj-pku': '17', 'kg-kinder': '21', 'kg-primary': '22', 'kg-sec': '23', 'kg-hs': '24' }[sid] || '00';
+    var ymd = function (t) { var d = new Date(t); return d.getFullYear() + ('0' + (d.getMonth() + 1)).slice(-2) + ('0' + d.getDate()).slice(-2); };
+    var LV = CFG.levels.map(function (l) { return l[0]; });
+    var ORDER = ['_', 'Kindergarten 1', 'Kindergarten 2', 'Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6', 'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'];
+    var li = ORDER.indexOf(D.level), prevLv = li > 1 ? ORDER[li - 1] : '';
+    var ageOf = function (lv) { if (lv === 'Kindergarten 1') return 4; if (lv === 'Kindergarten 2') return 5; return parseInt(lv.slice(6), 10) + 5; };
+    var age = ageOf(D.level);
+    var birth = D.created - (age + 0.2 + rn(2) * 0.7) * 365.25 * DAY;
+    var FEM = ['Aisyah', 'Alya', 'Citra', 'Ghina', 'Kayla', 'Naura', 'Nayla', 'Raisa', 'Salma', 'Syifa', 'Zahra', 'Athaya', 'Shakira', 'Alesha', 'Qiana', 'Yasmin', 'Kirana', 'Humaira', 'Lubna', 'Shafa'];
+    var FEMP = ['Dewi', 'Siti', 'Rina', 'Wulan', 'Fitri', 'Yuni', 'Lina', 'Maya', 'Nur', 'Ratna', 'Sri'];
+    var first = (D.name || '').split(' ')[0];
+    var female = D.name ? FEM.indexOf(first) >= 0 : rn(3) < .5;
+    var parentFemale = FEMP.indexOf(D.parent.split(' ')[0]) >= 0;
+    var lastName = D.parent.split(' ').slice(-1)[0];
+    var father = parentFemale ? pick(['Agus', 'Budi', 'Hendra', 'Eko', 'Andi', 'Rudi', 'Dedi', 'Arif', 'Teguh', 'Irfan'], 4) + ' ' + pick(['Setiawan', 'Gunawan', 'Prasetyo', 'Wijaya', 'Hartono', 'Kurniawan'], 5) : D.parent;
+    var mother = parentFemale ? D.parent : pick(['Dewi', 'Siti', 'Rina', 'Wulan', 'Fitri', 'Yuni', 'Lina', 'Maya'], 6) + ' ' + pick(['Anggraini', 'Rahmawati', 'Marlina', 'Handayani', 'Kartika', 'Puspita'], 7);
+    var waNum = '62' + D.phone.replace(/-/g, '').replace(/^0/, '');
+    // ---- stage
+    var leads = D.flow === 'Leads';
+    var formPaid = D.cur >= 1;
+    var accepted = D.cur >= 4;
+    var enrolled = !!D.tdone;
+    var method = pick(['QRIS', 'QRIS', 'QRIS', 'VA BNI', 'VA BRI'], 8);
+    var payDate = D.created + (0.2 + rn(9) * 1.5) * DAY;
+    var psyDate = D.psy ? D.created + (4 + rn(10) * 6) * DAY : 0;
+    var itvDate = D.itv ? psyDate + (2 + rn(11) * 5) * DAY : 0;
+    var accDate = accepted ? (itvDate || D.created) + (2 + rn(12) * 4) * DAY : 0;
+    var tuiDate = enrolled ? accDate + (3 + rn(13) * 10) * DAY : 0;
+    // ---- field helpers
+    var F = function (o) { return Object.assign({ isText: false, isEmpty: false, isCheck: false, isBadge: false, isFile: false, isPhoto: false, text: '', yes: false, no: false, uploaded: false, missing: false, fileName: '', badgeStyle: '', valStyle: '', upload: null, wide: '', filled: false, btn: '', photoStyle: '', photoText: '' }, o); };
+    var T = function (label, v, opt) { var ok = v !== '' && v != null; return F(Object.assign({ label: label, isText: ok, isEmpty: !ok, text: ok ? String(v) : '', filled: ok }, opt || {})); };
+    var C = function (label, v) { return F({ label: label, isCheck: true, yes: !!v, no: !v, filled: true }); };
+    var B = function (label, text, t) { return F({ label: label, isBadge: true, text: text, badgeStyle: tone(t), filled: true }); };
+    var U = function (label, ok, fname) { return F({ label: label, isFile: true, uploaded: !!ok, missing: !ok, fileName: ok ? fname : 'Belum diunggah', filled: !!ok, btn: ok ? 'Ganti' : 'Unggah', upload: function () { toast((ok ? 'Mengganti ' : 'Mengunggah ') + label.toLowerCase() + ' (simulasi)'); } }); };
+    var FLOWT = { 'Leads': 'gray', 'Register': 'blue', 'Payment': 'blue', 'Tuition': 'green', 'Waiting List': 'amber', 'Invalid': 'red' };
+    var ACC = { 'Accepted': ['Diterima', 'green'], 'On Progress': ['Dalam proses', 'blue'], 'Waiting List': ['Waiting List', 'amber'], 'Invalid': ['Invalid', 'red'], 'Belum diproses': ['Belum diproses', 'gray'] }[D.acceptance] || [D.acceptance, 'gray'];
+    var sec = function (title, fields) { var n = 0; fields.forEach(function (f) { if (f.filled) n++; }); return { title: title, fields: fields, isEmptyTab: false, emptyText: '', count: n + '/' + fields.length + ' terisi', countStyle: n === fields.length ? 'color:var(--green-fg)' : 'color:var(--muted)' }; };
+    // ---- previous school
+    var prevName = '', prevAddr = '', npsn = '';
+    if (prevLv) {
+      var kind = prevLv.indexOf('Kindergarten') === 0 ? 'TK' : (ORDER.indexOf(prevLv) <= 8 ? 'SD' : (ORDER.indexOf(prevLv) <= 11 ? 'SMP' : 'SMA'));
+      var sameSchool = D.level !== LV[0];
+      prevName = kind === 'TK' ? pick(['TKIT At Tamam', 'TK Aisyiyah 3', 'TKIT Al Ikhlas', 'RA Nurul Huda', 'TK Tunas Harapan'], 14) : (kind + pick([' Negeri ' + (2 + Math.floor(rn(15) * 40)) + ' ' + cap(CITY.replace('KOTA ', '')), 'IT Al Fikri', 'IT Insan Mulia', ' Muhammadiyah 2', ' Islam Al Azhar 9'], 16));
+      if (sameSchool && rn(17) < .3) prevName = kind + ' lain di ' + cap(CITY.replace('KOTA ', ''));
+      prevAddr = 'Jl. ' + pick(['Bukit Senyum', 'Cempaka Putih', 'Pahlawan', 'Merdeka', 'Ahmad Yani', 'Soekarno-Hatta', 'Riau Ujung'], 18) + ' No. ' + (1 + Math.floor(rn(19) * 120));
+      npsn = rn(20) < .6 ? (CITY === 'KOTA PEKANBARU' ? '1050' : '2021') + digits(4, 21) : '';
+    }
+    var award = rn(22) < .22 ? pick(['Juara 2 Lomba Tahfiz tingkat kecamatan', 'Juara 1 Olimpiade Matematika tingkat kota', 'Juara 3 Lomba Mewarnai tingkat kota', 'Juara 1 Lomba Pidato Bahasa Inggris'], 23) : '';
+    var NOTES = ['Mohon info jadwal psikotes', 'Apakah tersedia layanan antar-jemput?', 'Adik kandung siswa aktif kelas ' + LV[Math.min(LV.length - 1, 2)], ''];
+    var message = rn(24) < .35 ? pick(NOTES, 25) : '';
+    // ---- tabs
+    var general = [
+      sec('Informasi umum', [
+        C('Aktif', !D.inv), T('Didaftarkan oleh', D.parent), T('Email', D.email), T('WhatsApp', waNum), T('Sumber info', D.source), C('Persetujuan', true),
+        T('Dibuat pada', self.fmt(D.created, true)), T('Perusahaan', CFG.name), T('Sekolah', CFG.name), T('Level', D.level), T('Tahun ajaran', D.year), T('Pesan', message)
+      ]),
+      sec('Calon siswa', [
+        T('Status siswa', D.level === LV[0] ? 'Siswa baru' : 'Siswa pindahan'), T('NISN', ORDER.indexOf(D.level) >= 4 ? '0' + digits(9, 26) : ''), (D.name ? T('Nama siswa', D.name) : F({ label: 'Nama siswa', isText: true, text: '(kosong)', valStyle: 'color:var(--red-fg);font-style:italic;font-weight:600' })),
+        T('Jenis kelamin', female ? 'Perempuan' : 'Laki-laki'), T('Tempat lahir', cap(CITY.replace('KOTA ', ''))), T('Tanggal lahir', fmtD(birth))
+      ]),
+      sec('Informasi sekolah asal', [
+        T('Nama sekolah', prevName.toUpperCase()), T('Level', prevLv), T('NPSN sekolah', npsn), T('Alamat sekolah', prevAddr ? prevAddr.toUpperCase() : ''), T('Prestasi tertinggi', award), U('Lampiran prestasi', !!award && formPaid, 'sertifikat-prestasi.pdf')
+      ]),
+      sec('Alamat', [
+        T('Alamat', leads ? '' : 'Jl. ' + pick(['Soponyono', 'Melati', 'Cempaka', 'Kenanga', 'Anggrek', 'Sudirman', 'Pahlawan'], 27) + ' No. ' + (1 + Math.floor(rn(28) * 99))), T('RT', leads ? '' : String(1 + Math.floor(rn(29) * 9))), T('RW', leads ? '' : String(1 + Math.floor(rn(30) * 12))), T('Kode pos', leads ? '' : area[2]),
+        T('Provinsi', leads ? '' : PROV), T('Kota/Kabupaten', leads ? '' : CITY), T('Kecamatan', leads ? '' : area[0]), T('Kelurahan', leads ? '' : area[1])
+      ]),
+      sec('Dokumen', [
+        T('No. KK (Family ID)', formPaid ? (CITY === 'KOTA PEKANBARU' ? '1471' : '3273') + digits(12, 31) : ''), T('NIK', formPaid ? (CITY === 'KOTA PEKANBARU' ? '1471' : '3273') + digits(12, 32) : ''),
+        U('Foto siswa', formPaid, 'foto-siswa.jpg'), U('Akta kelahiran', formPaid, 'akta-kelahiran.pdf'), U('Rapor sekolah asal', formPaid && !!prevLv && rn(33) > .2, 'rapor-sekolah-asal.pdf'), U('Kartu keluarga', formPaid, 'kartu-keluarga.pdf'), U('Surat persetujuan', accepted, 'surat-persetujuan.pdf')
+      ]),
+      sec('Lainnya', [
+        B('Tahap (flow)', D.flow, FLOWT[D.flow] || 'gray'), T('Kebutuhan khusus', ''), T('Bahasa sehari-hari', leads ? '' : 'Indonesia'), T('Kondisi medis', ''), T('Detail alergi', ''),
+        T('Layanan antar-jemput', leads ? '' : (rn(34) < .3 ? 'Ya' : 'Tidak')), T('Ekstrakurikuler', formPaid && rn(35) < .6 ? pick(['Robotik', 'Futsal', 'Tahfiz', 'Pramuka', 'Coding', 'Taekwondo'], 36) : '')
+      ])
+    ];
+    var payStatus = formPaid ? ['Lunas', 'green'] : (D.late ? ['Belum dibayar', 'red'] : ['Belum dibayar', 'amber']);
+    var psyB = D.psy ? ['Selesai', 'green'] : (D.flow === 'Payment' && !D.stale ? ['Terjadwal', 'blue'] : ['Belum', 'gray']);
+    var itvB = D.itv ? ['Selesai', 'green'] : (D.flow === 'Payment' && D.psy && !D.stale ? ['Terjadwal', 'blue'] : ['Belum', 'gray']);
+    var tuB = enrolled ? ['Lunas', 'green'] : (D.flow === 'Tuition' ? (D.nominal ? ['Menunggu pembayaran', 'blue'] : ['Nominal Rp 0', 'red']) : ['Belum ditagih', 'gray']);
+    var admission = [
+      sec('Biaya pendaftaran', [
+        T('No. registrasi', CODE + '.' + ymd(D.created) + '.' + (4000 + (h % 900))), T('Biaya pendaftaran', 'Rp 300.000'), U('Bukti bayar', formPaid, 'bukti-bayar-formulir.pdf'),
+        T('Metode pembayaran', leads ? '' : method), B('Status pembayaran', payStatus[0], payStatus[1]), T('Tanggal bayar', formPaid ? self.fmt(payDate, true) : ''), C('Settlement', formPaid && rn(37) > .08)
+      ]),
+      sec('Hasil seleksi', [
+        B('Psikotes', psyB[0], psyB[1]), T('Data psikotes', D.psy ? 'Hasil tersedia di menu Psikotes' : ''), T('Tanggal psikotes', D.psy ? self.fmt(psyDate, true) : (psyB[0] === 'Terjadwal' ? self.fmt(D.sched, true) + ' (terjadwal)' : '')),
+        B('Wawancara orang tua', itvB[0], itvB[1]), T('Tanggal wawancara', D.itv ? self.fmt(itvDate, true) : (itvB[0] === 'Terjadwal' ? self.fmt(D.sched, true) + ' (terjadwal)' : '')),
+        B('Status penerimaan', ACC[0], ACC[1]), T('Tanggal penerimaan', accepted ? fmtD(accDate) : ''), T('Catatan', D.wait ? 'Kuota ' + D.level + ' penuh, masuk daftar tunggu' : (D.inv ? 'Data duplikat dengan pendaftaran lain' : '')), T('Referensi', D.source === 'Referensi orang tua' ? 'Orang tua siswa ' + pick(LV, 38) : '')
+      ]),
+      sec('Biaya tuition', [
+        U('Surat konfirmasi', accepted, 'surat-konfirmasi.pdf'), C('Status surat konfirmasi', accepted && rn(39) > .25), U('Bukti bayar tuition', enrolled, 'bukti-bayar-tuition.pdf'),
+        T('Jumlah pembayaran dipilih', D.flow === 'Tuition' ? (enrolled ? '1' : String(1 + Math.floor(rn(40) * 3))) : ''), T('Tanggal tuition', enrolled ? fmtD(tuiDate) : ''), B('Status tuition', tuB[0], tuB[1])
+      ]),
+      sec('Notifikasi', [C('Kirim notifikasi pembayaran', !leads), C('Kirim notifikasi hasil seleksi', accepted)])
+    ];
+    var veh = pick(['Mobil pribadi', 'Sepeda motor', 'Antar-jemput sekolah', 'Jalan kaki'], 41);
+    var w = Math.round(age * 2.2 + 6 + rn(42) * 6), ht = Math.round(age * 6 + 76 + rn(43) * 10), hc = Math.round(48 + Math.min(age, 12) * 0.5 + rn(44) * 2);
+    var student = [
+      sec('Profil siswa', [
+        F({ label: 'Foto saat ini', isPhoto: true, photoText: formPaid ? self.initials(D.name) : '+', photoStyle: formPaid ? 'background:var(--primary-soft);color:var(--primary)' : 'border:2px dashed var(--border-strong);color:var(--muted)', fileName: formPaid ? 'foto-siswa.jpg' : 'Belum ada foto', btn: formPaid ? 'Ganti' : 'Unggah', filled: formPaid, wide: 'grid-row:span 2', upload: function () { toast('Mengunggah foto siswa (simulasi)'); } }),
+        T('Email siswa', enrolled && ORDER.indexOf(D.level) >= 6 ? (D.name || 'siswa').toLowerCase().split(' ').slice(0, 2).join('.') + '@' + (sid.indexOf('-tj-') >= 0 ? 'sekolahjuara.sch.id' : 'kreativaglobal.sch.id') : ''),
+        T('Tahun masuk', D.year), T('Agama', leads ? '' : 'Islam'), C('Beasiswa', rn(45) < .06)
+      ]),
+      sec('Dokumen', [
+        T('NISN', ORDER.indexOf(D.level) >= 4 ? '0' + digits(9, 26) : ''), T('NIS', enrolled ? CODE + '26' + digits(4, 46) : ''), T('NIPD', ''), T('No. KPS', ''), T('No. KIP', ''), T('No. UN', ''), T('No. ijazah', ''), T('No. KKS', ''), T('No. PIP', ''), T('SKHUN', ''),
+        T('No. akta kelahiran', formPaid ? digits(4, 47) + '-LT-' + ymd(birth) + '-' + digits(4, 48) : '')
+      ]),
+      sec('Informasi bank', [T('Bank', formPaid && method !== 'QRIS' ? method.replace('VA ', '') : ''), T('No. rekening', ''), T('Virtual account', formPaid ? (method === 'VA BNI' ? '8189' : (method === 'VA BRI' ? '1423' : '3580')) + digits(12, 49) : '')]),
+      sec('Informasi untuk pemerintah', [
+        T('Jenis tempat tinggal', enrolled ? 'Bersama orang tua' : ''), T('Moda transportasi', enrolled ? veh : ''), T('Jarak rumah–sekolah', enrolled ? (1 + rn(50) * 9).toFixed(1).replace('.', ',') + ' km' : ''),
+        T('Anak ke-', enrolled ? String(1 + Math.floor(rn(51) * 3)) : ''), T('Jumlah saudara', enrolled ? String(Math.floor(rn(52) * 3)) : ''),
+        T('Latitude', enrolled ? (LATLON[0] + (rn(53) - .5) * .08).toFixed(6) : ''), T('Longitude', enrolled ? (LATLON[1] + (rn(54) - .5) * .08).toFixed(6) : ''),
+        T('Berat badan', enrolled ? w + ' kg' : ''), T('Tinggi badan', enrolled ? ht + ' cm' : ''), T('Lingkar kepala', enrolled ? hc + ' cm' : '')
+      ])
+    ];
+    var JOBF = ['Karyawan swasta', 'PNS/BUMN/BUMD', 'Wiraswasta', 'TNI/Polri', 'Dosen', 'Dokter'], JOBM = ['Ibu rumah tangga', 'Ibu rumah tangga', 'Karyawan swasta', 'PNS/BUMN/BUMD', 'Guru', 'Wiraswasta'];
+    var EDU = ['SMA/sederajat', 'D3', 'S1', 'S1', 'S2'], INC = ['Rp 2,1 – 5 juta', 'Rp 5 – 10 juta', 'Rp 5 – 10 juta', 'Di atas Rp 10 juta'];
+    var mJob = pick(JOBM, 55);
+    var emer = formPaid && rn(56) < .55;
+    var parents = [
+      sec('Info ayah', [T('Nama ayah', father), T('Status ayah', leads ? '' : 'Masih hidup'), T('Pekerjaan ayah', leads ? '' : pick(JOBF, 57)), T('Pendidikan ayah', leads ? '' : pick(EDU, 58)), T('Penghasilan ayah', leads ? '' : pick(INC, 59)), U('KTP ayah', formPaid, 'ktp-ayah.jpg')]),
+      sec('Info ibu', [T('Nama ibu', mother), T('Status ibu', leads ? '' : 'Masih hidup'), T('Pekerjaan ibu', leads ? '' : mJob), T('Pendidikan ibu', leads ? '' : pick(EDU, 60)), T('Penghasilan ibu', leads ? '' : (mJob === 'Ibu rumah tangga' ? 'Tidak berpenghasilan' : pick(INC, 61))), U('KTP ibu', formPaid, 'ktp-ibu.jpg')]),
+      sec('Info wali', [T('Nama wali', ''), T('Pekerjaan wali', ''), T('Pendidikan wali', ''), T('Penghasilan wali', ''), T('Hubungan dengan wali', ''), U('KTP wali', false, '')]),
+      sec('Kontak darurat', [T('Nama', emer ? pick(['Hj. Komariah', 'Bambang Sutrisno', 'Euis Sumiati', 'Dodi Kusnadi'], 62) : ''), T('Telepon', emer ? '62813' + digits(8, 63) : ''), T('Hubungan', emer ? pick(['Nenek', 'Kakek', 'Paman', 'Bibi'], 64) : '')])
+    ];
+    var history = [{ title: 'Riwayat level', fields: [], isEmptyTab: true, emptyText: enrolled ? 'Riwayat level akan tercatat setelah siswa naik kelas atau pindah level.' : 'Belum ada riwayat level. Riwayat tercatat setelah calon siswa resmi terdaftar sebagai siswa.', count: '', countStyle: '' }];
+    var all = { general: general, admission: admission, student: student, parents: parents, history: history };
+    var stat = function (arr) { var a = 0, b = 0; arr.forEach(function (s0) { s0.fields.forEach(function (f) { b++; if (f.filled) a++; }); }); return b ? a + '/' + b : ''; };
+    return { all: all, tabs: [['general', 'Umum', stat(general)], ['admission', 'Penerimaan', stat(admission)], ['student', 'Siswa', stat(student)], ['parents', 'Orang tua', stat(parents)], ['history', 'Riwayat level', '']] };
+  }
+
+  appView(FORM, curTab, filter, setTab, setFilter) {
+    var M = {};
+    Object.keys(FORM.all).forEach(function (t) { FORM.all[t].forEach(function (sc) { sc.fields.forEach(function (f) { M[sc.title + '::' + f.label] = f; }); }); });
+    var g = function (key) { var f = M[key]; if (!f) throw new Error('field ' + key); return f; };
+    var GI = 'Informasi umum::', CS = 'Calon siswa::', PS = 'Profil siswa::', SA = 'Informasi sekolah asal::', AL = 'Alamat::', DG = 'Dokumen::', LN = 'Lainnya::', BP = 'Biaya pendaftaran::', HS = 'Hasil seleksi::', BT = 'Biaya tuition::', NO = 'Notifikasi::', IB = 'Informasi bank::', IP = 'Informasi untuk pemerintah::';
+    var studentDocs = FORM.all.student[1].fields; // Dokumen (student tab)
+    var sd = function (label) { var r = null; studentDocs.forEach(function (f) { if (f.label === label) r = f; }); return r; };
+    var pa = FORM.all.parents;
+    var pf = function (i, label) { var r = null; pa[i].fields.forEach(function (f) { if (f.label === label) r = f; }); return r; };
+    var cnt = function (fs) { var a = 0; fs.forEach(function (f) { if (f.filled) a++; }); return { a: a, b: fs.length }; };
+    var mk = function (title, icon, fields, opt) {
+      var c = cnt(fields);
+      var shown = filter === 'empty' ? fields.filter(function (f) { return !f.filled; }) : fields;
+      var icf = {}; ['user', 'school', 'pin', 'heart', 'card', 'bell', 'phone', 'id', 'chart'].forEach(function (k) { icf['ic_' + k] = k === icon; });
+      return Object.assign(icf, { title: title, fields: shown, allDone: shown.length === 0, count: c.a + '/' + c.b, countStyle: c.a === c.b ? 'background:var(--green-bg);color:var(--green-fg)' : 'background:var(--surface2);color:var(--muted)', icon: icon }, opt || {});
+    };
+    // ---- groups
+    var profil = [
+      mk('Identitas calon siswa', 'user', [g(PS + 'Foto saat ini'), g(CS + 'Nama siswa'), g(CS + 'Status siswa'), g(CS + 'Jenis kelamin'), g(CS + 'Tempat lahir'), g(CS + 'Tanggal lahir'), g(PS + 'Agama'), g(PS + 'Email siswa'), g(PS + 'Tahun masuk'), g(PS + 'Beasiswa')]),
+      mk('Sekolah asal', 'school', [g(SA + 'Nama sekolah'), g(SA + 'Level'), g(SA + 'NPSN sekolah'), g(SA + 'Alamat sekolah'), g(SA + 'Prestasi tertinggi')]),
+      mk('Alamat tinggal', 'pin', [g(AL + 'Alamat'), g(AL + 'RT'), g(AL + 'RW'), g(AL + 'Kode pos'), g(AL + 'Kelurahan'), g(AL + 'Kecamatan'), g(AL + 'Kota/Kabupaten'), g(AL + 'Provinsi')]),
+      mk('Kesehatan, bahasa & minat', 'heart', [g(LN + 'Kebutuhan khusus'), g(LN + 'Kondisi medis'), g(LN + 'Detail alergi'), g(LN + 'Bahasa sehari-hari'), g(LN + 'Layanan antar-jemput'), g(LN + 'Ekstrakurikuler')])
+    ];
+    var stepState = function (badge) { var st = badge.badgeStyle; if (st.indexOf('green') >= 0) return 'done'; if (st.indexOf('red') >= 0) return 'late'; if (st.indexOf('blue') >= 0 || st.indexOf('amber') >= 0) return 'active'; return 'todo'; };
+    var NODE = { done: 'background:var(--green-fg);color:var(--surface)', active: 'border:2px solid var(--blue-fg);background:var(--blue-bg);color:var(--blue-fg)', late: 'background:var(--red-fg);color:var(--surface)', todo: 'border:2px dashed var(--border-strong);background:var(--surface);color:var(--muted)' };
+    var step = function (n, title, statusF, dateF, fields) {
+      var stt = stepState(statusF);
+      var o = mk(title, '', fields);
+      return Object.assign(o, { n: String(n), status: statusF.text, statusStyle: statusF.badgeStyle, date: dateF && dateF.filled ? dateF.text : (stt === 'todo' ? 'Belum dimulai' : 'Tanggal belum tercatat'), nodeStyle: NODE[stt], isDone: stt === 'done', notDone: stt !== 'done', lineStyle: 'background:' + (stt === 'done' ? 'var(--green-fg)' : 'var(--border)'), cardStyle: stt === 'active' || stt === 'late' ? 'border-color:var(--primary);box-shadow:0 0 0 1px var(--primary)' : '' });
+    };
+    var accF = g(HS + 'Status penerimaan');
+    var steps = [
+      step(1, 'Pembayaran formulir', g(BP + 'Status pembayaran'), g(BP + 'Tanggal bayar'), [g(BP + 'No. registrasi'), g(BP + 'Biaya pendaftaran'), g(BP + 'Metode pembayaran'), g(BP + 'Status pembayaran'), g(BP + 'Tanggal bayar'), g(BP + 'Settlement'), g(BP + 'Bukti bayar')]),
+      step(2, 'Psikotes', g(HS + 'Psikotes'), g(HS + 'Tanggal psikotes'), [g(HS + 'Psikotes'), g(HS + 'Tanggal psikotes'), g(HS + 'Data psikotes')]),
+      step(3, 'Wawancara orang tua', g(HS + 'Wawancara orang tua'), g(HS + 'Tanggal wawancara'), [g(HS + 'Wawancara orang tua'), g(HS + 'Tanggal wawancara')]),
+      step(4, 'Keputusan penerimaan', accF, g(HS + 'Tanggal penerimaan'), [g(HS + 'Status penerimaan'), g(HS + 'Tanggal penerimaan'), g(LN + 'Tahap (flow)'), g(HS + 'Catatan'), g(HS + 'Referensi')]),
+      step(5, 'Pembayaran tuition', g(BT + 'Status tuition'), g(BT + 'Tanggal tuition'), [g(BT + 'Status tuition'), g(BT + 'Tanggal tuition'), g(BT + 'Jumlah pembayaran dipilih'), g(BT + 'Surat konfirmasi'), g(BT + 'Status surat konfirmasi'), g(BT + 'Bukti bayar tuition')])
+    ];
+    steps[steps.length - 1].lastStep = true;
+    steps.forEach(function (s0) { s0.hasLine = !s0.lastStep; });
+    var selExtra = [
+      mk('Rekening & virtual account', 'card', [g(IB + 'Bank'), g(IB + 'No. rekening'), g(IB + 'Virtual account')]),
+      mk('Notifikasi otomatis ke orang tua', 'bell', [g(NO + 'Kirim notifikasi pembayaran'), g(NO + 'Kirim notifikasi hasil seleksi')])
+    ];
+    var docIds = [g(DG + 'No. KK (Family ID)'), g(DG + 'NIK')];
+    var docFiles = [g(DG + 'Foto siswa'), g(DG + 'Akta kelahiran'), g(DG + 'Kartu keluarga'), g(DG + 'Rapor sekolah asal'), g(DG + 'Surat persetujuan'), g(SA + 'Lampiran prestasi'), pf(0, 'KTP ayah'), pf(1, 'KTP ibu'), pf(2, 'KTP wali')];
+    var keluarga = [
+      mk('Ayah', 'user', [pf(0, 'Nama ayah'), pf(0, 'Status ayah'), pf(0, 'Pekerjaan ayah'), pf(0, 'Pendidikan ayah'), pf(0, 'Penghasilan ayah')]),
+      mk('Ibu', 'user', [pf(1, 'Nama ibu'), pf(1, 'Status ibu'), pf(1, 'Pekerjaan ibu'), pf(1, 'Pendidikan ibu'), pf(1, 'Penghasilan ibu')]),
+      mk('Wali', 'user', [pf(2, 'Nama wali'), pf(2, 'Hubungan dengan wali'), pf(2, 'Pekerjaan wali'), pf(2, 'Pendidikan wali'), pf(2, 'Penghasilan wali')]),
+      mk('Kontak darurat', 'phone', [pf(3, 'Nama'), pf(3, 'Telepon'), pf(3, 'Hubungan')])
+    ];
+    var gov = FORM.all.student[3].fields;
+    var dapodik = [
+      mk('Nomor induk & dokumen resmi', 'id', [sd('NISN'), sd('NIS'), sd('NIPD'), sd('No. akta kelahiran'), sd('No. KPS'), sd('No. KIP'), sd('No. KKS'), sd('No. PIP'), sd('No. UN'), sd('No. ijazah'), sd('SKHUN')]),
+      mk('Data pendukung', 'chart', gov.slice())
+    ];
+    var reg = [g(GI + 'Didaftarkan oleh'), g(GI + 'WhatsApp'), g(GI + 'Email'), g(GI + 'Sumber info'), g(GI + 'Dibuat pada'), g(GI + 'Tahun ajaran'), g(GI + 'Sekolah'), g(GI + 'Perusahaan'), g(GI + 'Level'), g(GI + 'Aktif'), g(GI + 'Persetujuan'), g(GI + 'Pesan')];
+    // ---- completeness per tab
+    var flat = function (arr) { var o = []; arr.forEach(function (x) { o = o.concat(x); }); return o; };
+    var groups = {
+      profil: [PS + 'Foto saat ini', CS + 'Nama siswa', CS + 'Status siswa', CS + 'Jenis kelamin', CS + 'Tempat lahir', CS + 'Tanggal lahir', PS + 'Agama', PS + 'Email siswa', PS + 'Tahun masuk', PS + 'Beasiswa', SA + 'Nama sekolah', SA + 'Level', SA + 'NPSN sekolah', SA + 'Alamat sekolah', SA + 'Prestasi tertinggi', AL + 'Alamat', AL + 'RT', AL + 'RW', AL + 'Kode pos', AL + 'Kelurahan', AL + 'Kecamatan', AL + 'Kota/Kabupaten', AL + 'Provinsi', LN + 'Kebutuhan khusus', LN + 'Kondisi medis', LN + 'Detail alergi', LN + 'Bahasa sehari-hari', LN + 'Layanan antar-jemput', LN + 'Ekstrakurikuler'].map(g),
+      dokumen: docIds.concat(docFiles),
+      keluarga: [pf(0, 'Nama ayah'), pf(0, 'Status ayah'), pf(0, 'Pekerjaan ayah'), pf(0, 'Pendidikan ayah'), pf(0, 'Penghasilan ayah'), pf(1, 'Nama ibu'), pf(1, 'Status ibu'), pf(1, 'Pekerjaan ibu'), pf(1, 'Pendidikan ibu'), pf(1, 'Penghasilan ibu'), pf(2, 'Nama wali'), pf(2, 'Hubungan dengan wali'), pf(2, 'Pekerjaan wali'), pf(2, 'Pendidikan wali'), pf(2, 'Penghasilan wali'), pf(3, 'Nama'), pf(3, 'Telepon'), pf(3, 'Hubungan')],
+      dapodik: [sd('NISN'), sd('NIS'), sd('NIPD'), sd('No. akta kelahiran'), sd('No. KPS'), sd('No. KIP'), sd('No. KKS'), sd('No. PIP'), sd('No. UN'), sd('No. ijazah'), sd('SKHUN')].concat(gov)
+    };
+    groups.seleksi = [BP + 'No. registrasi', BP + 'Biaya pendaftaran', BP + 'Metode pembayaran', BP + 'Status pembayaran', BP + 'Tanggal bayar', BP + 'Settlement', BP + 'Bukti bayar', HS + 'Psikotes', HS + 'Tanggal psikotes', HS + 'Data psikotes', HS + 'Wawancara orang tua', HS + 'Tanggal wawancara', HS + 'Status penerimaan', HS + 'Tanggal penerimaan', LN + 'Tahap (flow)', HS + 'Catatan', HS + 'Referensi', BT + 'Status tuition', BT + 'Tanggal tuition', BT + 'Jumlah pembayaran dipilih', BT + 'Surat konfirmasi', BT + 'Status surat konfirmasi', BT + 'Bukti bayar tuition', IB + 'Bank', IB + 'No. rekening', IB + 'Virtual account', NO + 'Kirim notifikasi pembayaran', NO + 'Kirim notifikasi hasil seleksi'].map(g);
+    var TABS = [['overview', 'Ringkasan', null], ['profil', 'Profil siswa', groups.profil], ['seleksi', 'Seleksi & pembayaran', groups.seleksi], ['dokumen', 'Dokumen', groups.dokumen], ['keluarga', 'Keluarga', groups.keluarga], ['dapodik', 'Dapodik', groups.dapodik], ['history', 'Riwayat level', null]];
+    var cur = TABS.some(function (t) { return t[0] === curTab; }) ? curTab : 'overview';
+    var tabs = TABS.map(function (t) {
+      var a = cur === t[0], c = t[2] ? cnt(t[2]) : null, full = c && c.a === c.b;
+      return { key: t[0], label: t[1], hasStat: !!c, stat: c ? c.a + '/' + c.b : '', statStyle: full ? 'background:var(--green-bg);color:var(--green-fg)' : 'background:var(--surface2);color:var(--muted)', activeStr: a ? 'true' : 'false', isActive: a, pick: setTab(t[0]) };
+    });
+    var complete = TABS.filter(function (t) { return t[2]; }).map(function (t) {
+      var c = cnt(t[2]), pct = Math.round(c.a / c.b * 100);
+      return { label: t[1], a: c.a, b: c.b, text: c.a + ' dari ' + c.b + ' field terisi', pct: pct, pctText: pct + '%', barStyle: pct === 100 ? 'background:var(--green-fg)' : 'background:var(--primary)', go: setTab(t[0]) };
+    });
+    var IMPORTANT = [['profil', [CS + 'Nama siswa', PS + 'Foto saat ini', AL + 'Alamat', CS + 'Tanggal lahir', SA + 'Nama sekolah']], ['dokumen', [DG + 'Akta kelahiran', DG + 'Kartu keluarga', DG + 'Foto siswa', DG + 'NIK', DG + 'No. KK (Family ID)', DG + 'Rapor sekolah asal']], ['keluarga', []], ['seleksi', [BP + 'Bukti bayar', BT + 'Surat konfirmasi']]];
+    var LBL = {}; TABS.forEach(function (t) { LBL[t[0]] = t[1]; });
+    var todo = [];
+    IMPORTANT.forEach(function (it) { it[1].forEach(function (k) { var f = g(k); if (!f.filled) todo.push({ label: f.label, where: LBL[it[0]], go: setTab(it[0]) }); }); });
+    [pf(0, 'KTP ayah'), pf(1, 'KTP ibu')].forEach(function (f) { if (!f.filled) todo.push({ label: f.label, where: 'Dokumen', go: setTab('dokumen') }); });
+    var totalA = 0, totalB = 0; complete.forEach(function (c) { totalA += c.a; totalB += c.b; });
+    var docsUp = docFiles.filter(function (f) { return f.filled; }).length;
+    var emptyHere = 0; var gl = groups[cur]; if (gl) gl.forEach(function (f) { if (!f.filled) emptyHere++; });
+    var segStyle = function (a) { return 'height:30px;padding:0 12px;border:0;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;background:' + (a ? 'var(--surface)' : 'transparent') + ';color:' + (a ? 'var(--text)' : 'var(--muted)') + ';box-shadow:' + (a ? '0 1px 2px rgba(0,0,0,.12)' : 'none'); };
+    return {
+      tabs: tabs, cur: cur,
+      isOverview: cur === 'overview', isProfil: cur === 'profil', isSeleksi: cur === 'seleksi', isDokumen: cur === 'dokumen', isKeluarga: cur === 'keluarga', isDapodik: cur === 'dapodik', isHistory: cur === 'history',
+      hasFilter: !!groups[cur] && cur !== 'dokumen', filterAll: setFilter('all'), filterEmpty: setFilter('empty'), allPressed: filter !== 'empty' ? 'true' : 'false', emptyPressed: filter === 'empty' ? 'true' : 'false', allStyle: segStyle(filter !== 'empty'), emptyStyle: segStyle(filter === 'empty'), emptyHere: emptyHere,
+      complete: complete, totalPct: Math.round(totalA / totalB * 100) + '%', totalText: totalA + ' dari ' + totalB + ' field terisi',
+      todo: todo.slice(0, 8), hasTodo: todo.length > 0, noTodo: todo.length === 0, todoMore: todo.length > 8 ? '+' + (todo.length - 8) + ' lainnya' : '', hasTodoMore: todo.length > 8,
+      reg: reg,
+      profil: profil, steps: steps, selExtra: selExtra, keluarga: keluarga, dapodik: dapodik,
+      docIds: docIds, docFiles: docFiles.map(function (f) { return Object.assign({}, f, { tileStyle: f.filled ? 'border-color:var(--green-fg)' : 'border-style:dashed' , iconStyle: f.filled ? 'background:var(--green-bg);color:var(--green-fg)' : 'background:var(--surface2);color:var(--muted)', statusText: f.filled ? 'Diunggah' : 'Belum diunggah', statusStyle: f.filled ? 'color:var(--green-fg)' : 'color:var(--muted)', fname: f.filled ? f.fileName : 'Belum ada file' }); }),
+      docsText: docsUp + ' dari ' + docFiles.length + ' dokumen diunggah', docsPct: Math.round(docsUp / docFiles.length * 100),
+      historyText: FORM.all.history[0].emptyText
+    };
+  }
+
+  dotStyle(st) {
+    if (st === 'done') return 'background:var(--green-fg);color:var(--surface);';
+    if (st === 'active') return 'border:2px solid var(--blue-fg);background:var(--blue-bg);';
+    if (st === 'wait') return 'border:2px solid var(--amber-fg);background:var(--amber-bg);color:var(--amber-fg);';
+    if (st === 'late') return 'background:var(--red-fg);color:var(--surface);';
+    return 'border:2px dashed var(--border-strong);background:var(--surface);';
+  }
+
+  derive(r, stuck) {
+    var self = this, NOW = this.NOW(), DAY = 86400000;
+    var L = ['Bayar Formulir','Psikotes','Wawancara','Keputusan','Tuition'];
+    var inv = r.flow === 'Invalid';
+    var cur;
+    if (r.flow === 'Leads' || r.flow === 'Register' || inv) cur = 0;
+    else if (r.flow === 'Payment') cur = !r.psy ? 1 : (!r.itv ? 2 : 3);
+    else if (r.flow === 'Tuition') cur = r.tdone ? 5 : 4;
+    else cur = 3;
+    var wait = r.flow === 'Waiting List';
+    var allDone = cur === 5;
+    var stale = !r.active && !allDone && !inv;
+    var late = !allDone && !wait && !inv && !stale && r.days > stuck;
+    var stageStart = NOW - r.days * DAY;
+    var span = allDone ? Math.min(NOW - r.created, 75 * DAY) : Math.max(DAY, stageStart - r.created);
+    var steps = L.map(function (lab, i) {
+      var st = inv || stale ? (i < cur ? 'done' : 'todo') : (i < cur ? 'done' : (i === cur ? (wait ? 'wait' : (late ? 'late' : 'active')) : 'todo'));
+      var at = r.created + (i + 1) / (allDone ? 5 : cur + 1) * span;
+      var tip, date;
+      if (st === 'done') { tip = lab + (i === 3 ? ' · Diterima · ' : ' · Selesai · ') + self.fmt(at, false); date = self.fmt(at, false); }
+      else if (st === 'active') { tip = lab + ' · ' + (r.flow === 'Leads' ? 'belum mengisi formulir' : 'berjalan') + ' · ' + r.days + ' hari'; date = 'Berjalan, ' + r.days + ' hari'; }
+      else if (st === 'late') { tip = lab + ' · Terlambat · ' + r.days + ' hari di tahap ini'; date = 'Terlambat, ' + r.days + ' hari'; }
+      else if (st === 'wait') { tip = lab + ' · Waiting List, menunggu kuota'; date = 'Menunggu kuota'; }
+      else { tip = lab + (inv ? ' · dihentikan (data invalid)' : (stale ? ' · tidak dilanjutkan' : ' · Belum dimulai')); date = 'Belum'; }
+      return { label: lab, state: st, tip: tip, date: date, isDone: st === 'done', isActive: st === 'active', isWait: st === 'wait', isLate: st === 'late', hasLine: i > 0, lineStyle: 'background:' + ((i - 1) < cur ? 'var(--green-fg)' : 'var(--border-strong)'), dotStyle: self.dotStyle(st), at: at };
+    });
+    var summary = allDone ? 'Selesai · tuition lunas' : (inv ? 'Invalid · perlu verifikasi' : (stale ? 'TA ' + r.year + ' · tidak dilanjutkan' : (r.flow === 'Leads' ? 'Belum isi formulir' : L[cur] + ' · ' + (wait ? 'menunggu kuota' : (late ? 'terlambat' : 'berjalan')))));
+    var flags = [];
+    if (!r.name) flags.push('Nama siswa kosong');
+    if (inv) flags.push('Ditandai Invalid');
+    if ((r.flow === 'Tuition' && !r.tdone || wait) && !r.nominal) flags.push('Nominal tuition Rp 0');
+    var a;
+    if (inv) a = ['Verifikasi data', 'Verifikasi Data Pendaftar'];
+    else if (stale) a = ['Lihat riwayat', 'Lihat Riwayat'];
+    else if (r.flow === 'Leads') a = ['Kirim link formulir', 'Kirim Link Formulir'];
+    else if (r.flow === 'Register') a = ['Ingatkan bayar', 'Kirim Pengingat Pembayaran'];
+    else if (r.flow === 'Payment') a = !r.psy ? ['Jadwalkan psikotes', 'Jadwalkan Psikotes'] : (!r.itv ? ['Jadwalkan wawancara', 'Jadwalkan Wawancara'] : ['Input keputusan', 'Input Keputusan']);
+    else if (r.flow === 'Tuition') a = r.tdone ? ['Lihat', 'Lihat Bukti Pembayaran'] : ['Kirim tagihan', 'Kirim Tagihan Tuition'];
+    else a = ['Tawarkan kursi', 'Tawarkan Kursi'];
+    var acc = { 'Leads': 'Belum diproses', 'Register': 'Belum diproses', 'Payment': 'On Progress', 'Tuition': 'Accepted', 'Waiting List': 'Waiting List', 'Invalid': 'Invalid' }[r.flow];
+    var daysStyle = allDone ? this.tone('green') : (late || inv ? this.tone('red') : (wait ? this.tone('amber') : this.tone('gray')));
+    return Object.assign({}, r, {
+      cur: cur, steps: steps, late: late, wait: wait, inv: inv, stale: stale, allDone: allDone, summary: summary,
+      flags: flags, hasFlag: flags.length > 0, flagText: flags.join(' · '),
+      action: a[0], actionLong: a[1], acceptance: acc,
+      daysText: allDone ? 'Selesai' : (stale ? 'Ditutup' : (inv ? 'Invalid' : r.days + ' hari' + (late ? ' · terlambat' : ''))),
+      daysStyle: daysStyle,
+      flowStyle: inv ? 'background:var(--red-bg);color:var(--red-fg)' : 'background:var(--surface2);border:1px solid var(--border)',
+      nameText: r.name || '(Nama siswa kosong)', nameLabel: r.name || 'pendaftar tanpa nama',
+      nameStyle: r.name ? 'color:var(--text)' : 'color:var(--red-fg);font-style:italic',
+      createdText: this.fmt(r.created, true),
+      flagShort: flags.length ? (flags[0].indexOf('Nama') === 0 ? 'Nama kosong' : (flags[0].indexOf('Invalid') >= 0 ? 'Invalid' : 'Rp 0')) : '',
+      stepAria: 'Progress: ' + summary
+    });
+  }
+
+  getRecs(s, stuck) {
+    this._bases = this._bases || {};
+    if (!this._bases[s.school]) this._bases[s.school] = this.buildData(s.school);
+    if (this._rc && this._rcO === s.overrides && this._rcS === stuck && this._rcK === s.school) return this._rc;
+    var self = this;
+    this._rc = this._bases[s.school].map(function (b) { var o = s.overrides[b.id]; return self.derive(o ? Object.assign({}, b, o) : b, stuck); });
+    this._rcO = s.overrides; this._rcS = stuck; this._rcK = s.school;
+    return this._rc;
+  }
+
+  matchStatus(r, st) {
+    if (st === 'all') return true;
+    if (st === 'late') return r.late;
+    if (st === 'issue') return r.hasFlag;
+    if (st === 'stale') return r.stale;
+    if (st === 'form') return !r.stale && (r.flow === 'Leads' || r.flow === 'Register');
+    if (st === 'psy') return !r.stale && r.flow === 'Payment' && !r.psy;
+    if (st === 'itv') return !r.stale && r.flow === 'Payment' && r.psy && !r.itv;
+    if (st === 'decision') return !r.stale && r.flow === 'Payment' && r.psy && r.itv;
+    if (st === 'tuition') return !r.stale && r.flow === 'Tuition' && !r.tdone;
+    if (st === 'done') return r.flow === 'Tuition' && r.tdone;
+    return true;
+  }
+
+  S() {
+    return Object.assign({ school: this.props.startSchool || 'kg-sec', tabPage: this.props.startTab || 'list', dark: false, tab: 'All', q: '', year: '2027/2028', level: 'all', status: 'all', limit: 15, selMode: false, selected: {}, detailId: null, sheet: null, toast: '', overrides: {}, actTab: 'late', sim: null }, this.state || {});
+  }
+
+  renderVals() {
+    var self = this, s = this.S();
+    var stuck = Number(this.props.stuckDays == null ? 7 : this.props.stuckDays) || 7;
+    var sim = s.sim || this.props.simState || 'normal';
+    var recs = this.getRecs(s, stuck);
+    var NOW = this.NOW(), DAY = 86400000;
+    var CFG = this.SCHOOLS()[s.school];
+    var FL = ['Leads','Register','Payment','Tuition','Waiting List','Invalid'].filter(function (f) { return CFG.flows[f] != null; });
+    var set = function (o) { return function () { self.setState(o); }; };
+    var toast = function (msg) { clearTimeout(self._tt); self.setState({ toast: msg }); self._tt = setTimeout(function () { self.setState({ toast: '' }); }, 2600); };
+    var open = function (id) { return function () { self.setState({ detailId: id, detailTab: 'overview', dFilter: 'all', navHist: [] }); }; };
+    var byId = {}; recs.forEach(function (r) { byId[r.id] = r; });
+    var cy = recs.filter(function (r) { return r.year === '2027/2028'; });
+    var lateL = cy.filter(function (r) { return r.late; }).sort(function (a, b) { return b.days - a.days; });
+    var normal = sim === 'normal';
+
+    var navStyle = function (act) { return 'display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:0;margin:6px 4px;border-radius:12px;cursor:pointer;font-size:12px;font-weight:' + (act ? '700' : '500') + ';background:' + (act ? 'var(--side-active-bg)' : 'transparent') + ';color:' + (act ? 'var(--side-active-fg)' : 'var(--side-fg)'); };
+    var segStyle = function (act) { return 'height:40px;border:0;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;background:' + (act ? 'var(--surface)' : 'transparent') + ';color:' + (act ? 'var(--text)' : 'var(--muted)') + ';box-shadow:' + (act ? '0 1px 2px rgba(0,0,0,.12)' : 'none'); };
+
+    // home
+    var n = cy.length, acc = cy.filter(function (r) { return r.flow === 'Tuition'; });
+    var new7 = cy.filter(function (r) { return NOW - r.created <= 7 * DAY; }).length;
+    var collected = acc.reduce(function (t, r) { return t + (r.tdone ? r.nominal : 0); }, 0), target = CFG.target;
+    var quota = CFG.levels.reduce(function (t, l) { return t + l[2]; }, 0);
+    var kpis = [
+      { label: 'Total pendaftar', value: String(n), sub: 'semua tahap' },
+      { label: 'Baru 7 hari', value: String(new7), sub: 'pendaftar baru' },
+      { label: 'Konversi', value: (n ? acc.length / n * 100 : 0).toFixed(1).replace('.', ',') + '%', sub: 'Leads → Diterima' },
+      { label: 'Macet > ' + stuck + ' hari', value: String(lateL.length), sub: 'perlu ditindaklanjuti' }
+    ];
+    var cnt = function (f) { return cy.filter(f).length; };
+    var fs = [['Leads', n], ['Register', cnt(function (r) { return r.flow !== 'Leads'; })], ['Bayar formulir', cnt(function (r) { return r.flow === 'Payment' || r.flow === 'Tuition' || r.flow === 'Waiting List'; })], ['Tes & wawancara', cnt(function (r) { return r.flow === 'Tuition' || r.flow === 'Waiting List' || (r.flow === 'Payment' && r.psy && r.itv); })], ['Diterima', acc.length]];
+    var funnel = fs.map(function (f, i) { var prev = i ? fs[i - 1][1] : f[1]; return { label: f[0], count: f[1], pct: n ? Math.max(2, Math.round(f[1] / n * 100)) : 0, opacity: String(1 - i * 0.13), dropText: i ? '↓' + (prev ? Math.round((prev - f[1]) / prev * 100) : 0) + '%' : '' }; });
+
+    // list
+    var q = (s.q || '').trim().toLowerCase();
+    var base = recs.filter(function (r) {
+      if (s.year !== 'all' && r.year !== s.year) return false;
+      if (s.level !== 'all' && r.level !== s.level) return false;
+      if (!self.matchStatus(r, s.status)) return false;
+      if (q && !((r.name || '').toLowerCase().indexOf(q) >= 0 || r.parent.toLowerCase().indexOf(q) >= 0 || r.regNo.toLowerCase().indexOf(q) >= 0)) return false;
+      return true;
+    });
+    var tabs = ['All'].concat(FL).map(function (t) {
+      var c = t === 'All' ? base.length : base.filter(function (r) { return r.flow === t; }).length, a = s.tab === t;
+      return { label: t === 'All' ? 'Semua' : t, count: c, pick: set({ tab: t, limit: 15 }), activeStr: a ? 'true' : 'false', style: 'flex:none;height:36px;padding:0 14px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap;border:1px solid ' + (a ? 'var(--primary)' : 'var(--border)') + ';background:' + (a ? 'var(--primary)' : 'var(--surface)') + ';color:' + (a ? 'var(--on-primary)' : 'var(--text)') };
+    });
+    var filtered = (s.tab === 'All' ? base : base.filter(function (r) { return r.flow === s.tab; })).slice().sort(function (a, b) { return b.created - a.created; });
+    var sel = s.selected;
+    var cards = filtered.slice(0, s.limit).map(function (r) {
+      return Object.assign({}, r, {
+        checked: !!sel[r.id], cardStyle: sel[r.id] ? 'border-color:var(--primary);background:var(--primary-soft)' : '',
+        toggle: function () { var x = Object.assign({}, self.S().selected); if (x[r.id]) delete x[r.id]; else x[r.id] = true; self.setState({ selected: x }); },
+        tap: function () { if (self.S().selMode) { var x = Object.assign({}, self.S().selected); if (x[r.id]) delete x[r.id]; else x[r.id] = true; self.setState({ selected: x }); } else self.setState({ detailId: r.id, detailTab: 'overview', dFilter: 'all', navHist: [] }); }
+      });
+    });
+    var filterCount = (s.year !== '2027/2028' ? 1 : 0) + (s.level !== 'all' ? 1 : 0) + (s.status !== 'all' ? 1 : 0);
+    var selIds = Object.keys(sel);
+
+    // actions
+    var actItems, actHint;
+    var M = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+    if (s.actTab === 'late') {
+      actHint = lateL.length + ' pendaftar tertahan lebih dari ' + stuck + ' hari di satu tahap.';
+      actItems = lateL.slice(0, 12).map(function (r) { return { open: open(r.id), name: r.nameText, sub: r.summary.split(' · ')[0] + ' · ' + r.level, lead1: String(r.days), lead2: 'HARI', leadStyle: self.tone('red') }; });
+    } else if (s.actTab === 'sched') {
+      var sch = cy.filter(function (r) { return r.flow === 'Payment' && !(r.psy && r.itv); }).sort(function (a, b) { return a.sched - b.sched; });
+      actHint = sch.length + ' psikotes & wawancara terjadwal dalam 6 hari ke depan.';
+      actItems = sch.slice(0, 12).map(function (r) { var d = new Date(r.sched); return { open: open(r.id), name: r.nameText, sub: (r.psy ? 'Wawancara orang tua' : 'Psikotes') + ' · ' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2), lead1: String(d.getDate()), lead2: M[d.getMonth()].toUpperCase(), leadStyle: self.tone('blue') }; });
+    } else {
+      var pay = cy.filter(function (r) { return r.flow === 'Register' || (r.flow === 'Tuition' && !r.tdone); }).sort(function (a, b) { return b.days - a.days; });
+      actHint = pay.length + ' pembayaran tertunda (formulir & tuition).';
+      actItems = pay.slice(0, 12).map(function (r) { return { open: open(r.id), name: r.nameText, sub: r.flow === 'Register' ? 'Formulir · Rp 300.000' : 'Tuition · ' + (r.nominal ? self.rp(r.nominal) : 'nominal belum diisi'), lead1: String(r.days), lead2: 'HARI', leadStyle: r.late ? self.tone('red') : self.tone('amber') }; });
+    }
+
+    // detail
+    var D = s.detailId ? byId[s.detailId] : null, d = null;
+    if (D) {
+      var stageStart = NOW - D.days * DAY;
+      var ev = [{ t: D.created, title: 'Pendaftaran dibuat via ' + D.source, dot: 'background:var(--gray-fg)' }];
+      var titles = ['Biaya formulir dibayar', 'Psikotes selesai', 'Wawancara orang tua selesai', 'Keputusan: Diterima', 'Tuition lunas'];
+      D.steps.forEach(function (st, i) { if (st.isDone) ev.push({ t: st.at, title: titles[i], dot: 'background:var(--green-fg)' }); });
+      if (D.wait) ev.push({ t: stageStart, title: 'Masuk Waiting List — kuota penuh', dot: 'background:var(--amber-fg)' });
+      if (D.late) ev.push({ t: stageStart + 3 * DAY, title: 'Pengingat otomatis terkirim via WhatsApp', dot: 'background:var(--blue-fg)' });
+      ev.sort(function (a, b) { return b.t - a.t; });
+      var formPaid = D.cur >= 1, tu = D.flow === 'Tuition' || D.wait;
+      if (!self._form || self._formKey !== D.id + '|' + s.school + '|' + JSON.stringify(s.overrides[D.id] || {}) + D.late) { self._form = self.appForm(D, CFG, s.school, toast); self._formKey = D.id + '|' + s.school + '|' + JSON.stringify(s.overrides[D.id] || {}) + D.late; }
+      var FORM = self._form, curTab = FORM.all[s.detailTab] ? s.detailTab : 'general';
+      var mtabs = FORM.tabs.map(function (t) { var a = curTab === t[0]; return { label: t[1], stat: t[2], hasStat: !!t[2], activeStr: a ? 'true' : 'false', pick: set({ detailTab: t[0] }), style: 'flex:none;height:36px;padding:0 14px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap;border:1px solid ' + (a ? 'var(--primary)' : 'var(--border)') + ';background:' + (a ? 'var(--primary)' : 'var(--surface)') + ';color:' + (a ? 'var(--on-primary)' : 'var(--text)') }; });
+      var TABLBL = { overview: 'Ringkasan', profil: 'Profil siswa', seleksi: 'Seleksi & pembayaran', dokumen: 'Dokumen', keluarga: 'Keluarga', dapodik: 'Dapodik', history: 'Riwayat level' };
+      var curT = TABLBL[s.detailTab] ? s.detailTab : 'overview';
+      var goTab = function (k) { return function () { if (k === curT) return; var h = (self.S().navHist || []).concat([{ kind: 'tab', tab: curT, label: TABLBL[curT] }]).slice(-12); self.setState({ detailTab: k, dFilter: 'all', navHist: h }); }; };
+      var V = self.appView(FORM, curT, s.dFilter || 'all', goTab, function (f) { return set({ dFilter: f }); });
+      V.tabs.forEach(function (t) { var a = t.isActive; t.style = 'flex:none;height:36px;padding:0 14px;border-radius:999px;cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap;border:1px solid ' + (a ? 'var(--primary)' : 'var(--border)') + ';background:' + (a ? 'var(--primary)' : 'var(--surface)') + ';color:' + (a ? 'var(--on-primary)' : 'var(--text)'); });
+      d = {
+        v: V, mail: function () { toast('Membuka email ke ' + D.email); },
+        regNo: D.regNo, initials: self.initials(D.name), nameText: D.nameText, nameStyle: D.nameStyle, level: D.level, created: self.fmt(D.created, true),
+        flow: D.flow, daysText: D.allDone ? 'Selesai' : D.days + ' hari di tahap ini', daysStyle: D.daysStyle, flags: D.flags, steps: D.steps, actionLong: D.actionLong,
+        payments: [
+          { label: 'Biaya formulir', amount: 'Rp 300.000', status: formPaid ? 'Lunas' : 'Belum dibayar', badgeStyle: formPaid ? self.tone('green') : (D.late ? self.tone('red') : self.tone('amber')) },
+          { label: 'Uang pangkal & tuition', amount: D.nominal ? self.rp(D.nominal) : (tu ? 'Rp 0' : '—'), status: D.tdone ? 'Lunas' : (!D.nominal && tu ? 'Perlu dicek' : (D.flow === 'Tuition' ? 'Menunggu' : 'Belum ditagih')), badgeStyle: D.tdone ? self.tone('green') : (!D.nominal && tu ? self.tone('red') : (D.flow === 'Tuition' ? self.tone('blue') : self.tone('gray'))) }
+        ],
+        tests: [
+          { label: 'Psikotes', status: D.psy ? 'Selesai' : (D.flow === 'Payment' ? 'Terjadwal' : 'Belum'), badgeStyle: D.psy ? self.tone('green') : (D.flow === 'Payment' ? self.tone('blue') : self.tone('gray')), sub: D.psy ? 'Hasil: Direkomendasikan' : (D.flow === 'Payment' ? self.fmt(D.sched, true) : 'Setelah biaya formulir dibayar') },
+          { label: 'Wawancara orang tua', status: D.itv ? 'Selesai' : (D.flow === 'Payment' && D.psy ? 'Terjadwal' : 'Belum'), badgeStyle: D.itv ? self.tone('green') : (D.flow === 'Payment' && D.psy ? self.tone('blue') : self.tone('gray')), sub: D.itv ? 'Pewawancara: ' + D.officer : (D.flow === 'Payment' && D.psy ? self.fmt(D.sched, true) : 'Setelah psikotes') }
+        ],
+        parentRows: [{ k: 'Nama', v: D.parent }, { k: 'WhatsApp', v: D.phone }, { k: 'Email', v: D.email }, { k: 'Petugas PIC', v: D.officer }],
+        timeline: ev.map(function (e) { return { title: e.title, dot: e.dot, when: self.fmt(e.t, true) }; }),
+        primary: function () { toast(D.actionLong + ' (simulasi)'); },
+        wa: function () { toast('Membuka WhatsApp ke ' + D.parent); },
+        move: function () { self.setState({ sheet: { type: 'move', ids: [D.id], to: D.flow } }); }
+      };
+    }
+
+    // sheet
+    var sh = null;
+    if (s.sheet) {
+      if (s.sheet.type === 'school') sh = { title: 'Pilih sekolah', isSchool: true, isFilter: false, isMove: false };
+      else if (s.sheet.type === 'filter') sh = { title: 'Filter pendaftar', isSchool: false, isFilter: true, isMove: false };
+      else {
+        var ids = s.sheet.ids, one = ids.length === 1 ? byId[ids[0]] : null;
+        sh = { title: 'Pindahkan tahap', isFilter: false, isMove: true, to: s.sheet.to,
+          body: one ? (one.name || 'Pendaftar tanpa nama') + ' saat ini di tahap ' + one.flow + '.' : ids.length + ' pendaftar dipilih.',
+          onTo: function (e) { self.setState({ sheet: Object.assign({}, self.S().sheet, { to: e.target.value }) }); },
+          confirm: function () {
+            var to = self.S().sheet.to, ov = Object.assign({}, self.S().overrides);
+            ids.forEach(function (id) { var p = { flow: to, days: 0, tdone: false, active: true }; if (to === 'Leads' || to === 'Register' || to === 'Payment' || to === 'Invalid') { p.psy = false; p.itv = false; } else { p.psy = true; p.itv = true; } ov[id] = Object.assign({}, ov[id] || {}, p); });
+            self.setState({ overrides: ov, sheet: null, selected: {}, selMode: false });
+            toast((one ? (one.name || 'Pendaftar') : ids.length + ' pendaftar') + ' dipindahkan ke ' + to);
+          } };
+      }
+    }
+
+    var page = s.tabPage;
+    var titles2 = { home: 'Ringkasan', list: 'Pendaftar', act: 'Perlu tindakan' };
+    return {
+      themeClass: s.dark ? 't-dark' : 't-light', dark: s.dark, light: !s.dark,
+      darkLabel: s.dark ? 'Ganti ke mode terang' : 'Ganti ke mode gelap', toggleDark: set({ dark: !s.dark }),
+      schoolName: CFG.name, isTJ: s.school.indexOf('-tj-') >= 0, isKGS: s.school.indexOf('-tj-') < 0, brandClass: s.school.indexOf('-tj-') >= 0 ? 'b-tj' : 'b-kgs',
+      openSchool: set({ sheet: { type: 'school' } }),
+      schools: Object.keys(this.SCHOOLS()).map(function (k) { var a = k === s.school; return { name: self.SCHOOLS()[k].name, current: a ? 'true' : 'false', isCur: a, style: 'display:flex;align-items:center;gap:12px;width:100%;min-height:48px;padding:0 12px;border:0;border-radius:10px;text-align:left;cursor:pointer;font-size:15px;font-weight:' + (a ? '700' : '500') + ';background:' + (a ? 'var(--primary-soft)' : 'transparent') + ';color:' + (a ? 'var(--primary)' : 'var(--text)'), pick: function () { var el = document.getElementById('mq'); if (el) el.value = ''; self.setState({ school: k, sheet: null, tab: 'All', q: '', level: 'all', status: 'all', year: '2027/2028', limit: 15, selected: {}, selMode: false, detailId: null }); toast('Beralih ke ' + self.SCHOOLS()[k].name); } }; }),
+      pageTitle: titles2[page], lateAll: lateL.length, bellLabel: 'Notifikasi: ' + lateL.length + ' pendaftar macet',
+      goHome: set({ tabPage: 'home', selMode: false, selected: {} }), goList: set({ tabPage: 'list' }), goAct: set({ tabPage: 'act', selMode: false, selected: {} }),
+      homeCurrent: page === 'home' ? 'page' : 'false', listCurrent: page === 'list' ? 'page' : 'false', actCurrent: page === 'act' ? 'page' : 'false',
+      navHome: navStyle(page === 'home'), navList: navStyle(page === 'list'), navAct: navStyle(page === 'act'),
+      showError: sim === 'error', showNoAccess: sim === 'noaccess', showLoading: sim === 'loading', showEmpty: sim === 'empty',
+      retry: function () { self.setState({ sim: 'loading' }); setTimeout(function () { self.setState({ sim: 'normal' }); }, 900); },
+      isHome: normal && page === 'home', isList: normal && page === 'list', isAct: normal && page === 'act',
+      kpis: kpis, funnel: funnel,
+      tuitionText: this.rpShort(collected), tuitionPct: Math.min(100, Math.round(collected / target * 100)), tuitionPctText: Math.round(collected / target * 100) + '% target', targetText: this.rpShort(target), quotaLeft: quota - acc.length,
+      lateTop: lateL.slice(0, 3).map(function (r) { return { open: open(r.id), initials: self.initials(r.name), name: r.nameText, sub: r.summary.split(' · ')[0] + ' · ' + r.level, badge: r.days + ' hari' }; }),
+      onSearch: function (e) { var v = e.target.value; clearTimeout(self._qt); self._qt = setTimeout(function () { self.setState({ q: v, limit: 15 }); }, 250); },
+      tabs: tabs, listCount: filtered.length + ' pendaftar · ' + (s.year === 'all' ? 'semua TA' : 'TA ' + s.year),
+      openFilter: set({ sheet: { type: 'filter' } }), filterCount: filterCount, hasFilterCount: filterCount > 0,
+      selMode: s.selMode, selModeStr: s.selMode ? 'true' : 'false', selModeLabel: s.selMode ? 'Selesai' : 'Pilih',
+      toggleSelMode: set({ selMode: !s.selMode, selected: {} }),
+      noResults: filtered.length === 0, cards: cards, hasMore: filtered.length > s.limit, moreCount: filtered.length - s.limit,
+      loadMore: set({ limit: s.limit + 15 }),
+      resetFilters: function () { var el = document.getElementById('mq'); if (el) el.value = ''; self.setState({ q: '', year: '2027/2028', level: 'all', status: 'all', tab: 'All', limit: 15 }); },
+      year: s.year, level: s.level, status: s.status, filteredCount: filtered.length,
+      onYear: function (e) { self.setState({ year: e.target.value }); }, onLevel: function (e) { self.setState({ level: e.target.value }); }, onStatus: function (e) { self.setState({ status: e.target.value }); },
+      hasSel: s.selMode && selIds.length > 0 && page === 'list', selCount: selIds.length,
+      bulkWA: function () { toast('Pengingat WhatsApp terkirim ke ' + selIds.length + ' orang tua (simulasi)'); self.setState({ selected: {}, selMode: false }); },
+      bulkStage: function () { self.setState({ sheet: { type: 'move', ids: selIds, to: 'Payment' } }); },
+      actLate: set({ actTab: 'late' }), actSched: set({ actTab: 'sched' }), actPay: set({ actTab: 'pay' }),
+      actLateStr: s.actTab === 'late' ? 'true' : 'false', actSchedStr: s.actTab === 'sched' ? 'true' : 'false', actPayStr: s.actTab === 'pay' ? 'true' : 'false',
+      actLateStyle: segStyle(s.actTab === 'late'), actSchedStyle: segStyle(s.actTab === 'sched'), actPayStyle: segStyle(s.actTab === 'pay'),
+      actItems: actItems, actHint: actHint,
+      nav: (function () { var h = s.navHist || []; if (!d || !h.length) return { hasBack: false }; var last = h[h.length - 1];
+        return { hasBack: true, backLabel: last.label, trail: h.length > 1 ? h.length + ' langkah sebelumnya' : '',
+          back: function () { var hh = (self.S().navHist || []).slice(); var e = hh.pop(); if (!e) return;
+            if (e.kind === 'tab') self.setState({ detailTab: e.tab, dFilter: 'all', navHist: hh });
+            else if (e.kind === 'psy') self.setState({ detailId: null, navHist: hh, page: 'psy', xDetail: e.id }); } }; })(),
+      v: (d && d.v) || { tabs: [], complete: [], todo: [], reg: [], profil: [], steps: [], selExtra: [], keluarga: [], dapodik: [], docIds: [], docFiles: [] }, hasDetail: !!d, d: d || { steps: [], flags: [], payments: [], tests: [], parentRows: [], timeline: [] }, closeDetail: set({ detailId: null }),
+      hasSheet: !!sh, sheet: sh || {}, closeSheet: set({ sheet: null }),
+      hasToast: !!s.toast, toast: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

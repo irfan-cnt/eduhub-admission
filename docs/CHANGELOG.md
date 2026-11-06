@@ -1,5 +1,10 @@
 # CHANGELOG · Dokumentasi
 
+## 2026-11-06 · v1.1.1
+
+**Perubahan:** hasil audit Fase 0: Q-20–Q-32 & K-11–K-15 di [24](24-OPEN-QUESTIONS.md), catatan bukti di Q-01; dependensi Fase 2 (22); format `storage_path` (10); perilaku pindah ke tahap yang sama (14); struktur `lib/` (09).
+**Alasan:** ketidaksesuaian prototipe ↔ dokumen dan antar-dokumen.
+
 ## 2026-11-06 · v1.1.0
 
 **Perubahan:** tambah [26-CLAUDE-CODE-PROMPTS](26-CLAUDE-CODE-PROMPTS.md), berisi prompt step-by-step Fase 0–8 dengan gerbang, kriteria selesai, prompt perbaikan, review, dan sinkronisasi dokumentasi.

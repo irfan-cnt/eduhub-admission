@@ -42,7 +42,7 @@ flowchart LR
 | | |
 |---|---|
 | **Objectives** | Skema, RLS, storage siap di lokal & staging |
-| **Dependencies** | Fase 1, jawaban Q-02, Q-03, Q-07, Q-13 |
+| **Dependencies** | Fase 1, jawaban Q-01, Q-02, Q-03, Q-07, Q-13 (+ Q-20–Q-23 bila disetujui) |
 | **Tasks** | `supabase init`; migration enum + 30 tabel + trigger + view + RPC ([10](10-DATABASE-SCHEMA.md)); RLS ([13](13-ROW-LEVEL-SECURITY.md)); bucket + policy ([16](16-FILE-STORAGE.md)); seed dev (9 sekolah, level, TA, data contoh); generate types |
 | **Deliverables** | `supabase/migrations/*`, `seed.sql`, `database.types.ts` |
 | **Acceptance** | `supabase db reset` bersih; pgTAP constraint & view lulus; view turunan = hasil `lib/domain` untuk dataset yang sama |
